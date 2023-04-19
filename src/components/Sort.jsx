@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const Sort = () => {
+  const sortVariants = ["популярности", "цене", "алфавиту"];
+  const [open, setOpen] = useState(false);
+  const [currentSort, setCurrentCort] = useState(sortVariants[0]);
+
   return (
-    <div className="sort">
+    <div className="sort" onClick={() => setOpen(!open)}>
       <div className="sort__label">
         <svg
+          transform={open ? "rotate(180)" : ""}
           width="10"
           height="6"
           viewBox="0 0 10 6"
@@ -17,15 +22,23 @@ export const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <span>{currentSort}</span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {open && (
+        <div className="sort__popup">
+          <ul>
+            {sortVariants.map((variant) => (
+              <li
+                key={variant}
+                onClick={() => setCurrentCort(variant)}
+                className={variant === currentSort ? "active" : ""}
+              >
+                {variant}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
