@@ -4,6 +4,7 @@ import { Categories } from "./components/Categories";
 import { Sort } from "./components/Sort";
 import { PizzaBlock } from "./components/PizzaBlock";
 import { useGetMyPizzas } from "./hooks/useGetMyPizzas";
+import { Loader } from "./components/Loader";
 
 function App() {
   const [pizzas, loading, error] = useGetMyPizzas(
@@ -21,6 +22,7 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
+            {(loading || error) && <Loader error={error} />}
             {pizzas.length > 0 &&
               pizzas.map((pizza) => {
                 return <PizzaBlock {...pizza} key={pizza.id} />;
