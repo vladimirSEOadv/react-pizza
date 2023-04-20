@@ -3,9 +3,13 @@ import { Header } from "./components/Header";
 import { Categories } from "./components/Categories";
 import { Sort } from "./components/Sort";
 import { PizzaBlock } from "./components/PizzaBlock";
-import products from "../src/assets/pizzas.json";
+import { useGetMyPizzas } from "./hooks/useGetMyPizzas";
 
 function App() {
+  const [pizzas, loading, error] = useGetMyPizzas(
+    "https://6436dc673e4d2b4a12dda417.mockapi.io/items"
+  );
+
   return (
     <div className="wrapper">
       <Header />
@@ -17,9 +21,10 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            {products.pizzas.map((pizza) => {
-              return <PizzaBlock {...pizza} key={pizza.id} />;
-            })}
+            {pizzas.length > 0 &&
+              pizzas.map((pizza) => {
+                return <PizzaBlock {...pizza} key={pizza.id} />;
+              })}
           </div>
         </div>
       </div>
