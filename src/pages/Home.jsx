@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
 import { Loader } from "../components/Loader";
@@ -10,8 +10,13 @@ export const Home = () => {
   const [pizzas, loading, error] = useGetMyPizzas(
     "https://6436dc673e4d2b4a12dda417.mockapi.io/items"
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pizzas]);
+
   return (
-    <>
+    <div className="container">
       <div className="content__top">
         <Categories />
         <Sort />
@@ -28,6 +33,6 @@ export const Home = () => {
             return <PizzaBlock {...pizza} key={pizza.id} />;
           })}
       </div>
-    </>
+    </div>
   );
 };
