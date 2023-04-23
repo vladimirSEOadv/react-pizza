@@ -6,6 +6,7 @@ export const useGetMyPizzas = (link) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     fetch(link)
       .then((data) => {
         const { ok, status, statusText } = data;
