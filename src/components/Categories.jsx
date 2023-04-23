@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const CATEGORIES = [
   "Все",
@@ -9,9 +9,10 @@ const CATEGORIES = [
   "Закрытые",
 ];
 
-export const Categories = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
+export const Categories = ({
+  currentCategoryIndex,
+  setCurrentCategoryIndex,
+}) => {
   return (
     <div className="categories">
       <ul>
@@ -19,8 +20,8 @@ export const Categories = () => {
           return (
             <li
               key={nameCategory}
-              className={activeIndex === index ? "active" : ""}
-              onClick={() => setActiveIndex(index)}
+              className={currentCategoryIndex === index ? "active" : ""}
+              onClick={() => setCurrentCategoryIndex(index)}
             >
               {nameCategory}
             </li>

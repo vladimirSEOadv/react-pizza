@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
-export const Sort = () => {
+export const Sort = ({ currentSortIndex, setCurrentCortIndex }) => {
   const sortVariants = ["популярности", "цене", "алфавиту"];
   const [open, setOpen] = useState(false);
-  const [currentSort, setCurrentCort] = useState(sortVariants[0]);
 
   return (
     <div className="sort" onClick={() => setOpen(!open)}>
@@ -22,16 +21,20 @@ export const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>{currentSort}</span>
+        <span>{sortVariants[currentSortIndex]}</span>
       </div>
       {open && (
         <div className="sort__popup">
           <ul>
-            {sortVariants.map((variant) => (
+            {sortVariants.map((variant, index) => (
               <li
                 key={variant}
-                onClick={() => setCurrentCort(variant)}
-                className={variant === currentSort ? "active" : ""}
+                onClick={() => setCurrentCortIndex(index)}
+                className={
+                  sortVariants.indexOf(variant) === currentSortIndex
+                    ? "active"
+                    : ""
+                }
               >
                 {variant}
               </li>
