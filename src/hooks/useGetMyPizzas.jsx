@@ -5,6 +5,7 @@ export const useGetMyPizzas = (link) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // TODO refactor to async await
   useEffect(() => {
     setLoading(true);
     fetch(link)
