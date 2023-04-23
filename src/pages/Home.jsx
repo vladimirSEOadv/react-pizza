@@ -5,18 +5,30 @@ import { Loader } from "../components/Loader";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
+
 const BASEURL = "https://6436dc673e4d2b4a12dda417.mockapi.io/items";
-const SORTPARAMS = ["rating", "price", "name"];
+
+const SORTVALUES = [
+  { name: "популярности (По возрастанию)", sort: "rating", order: "desc" },
+  { name: "популярности (По убыванию)", sort: "rating", order: "asc" },
+  { name: "цене (По возрастанию)", sort: "price", order: "desc" },
+  { name: "цене (По убыванию)", sort: "price", order: "asc" },
+  { name: "алфавиту (По возрастанию)", sort: "name", order: "desc" },
+  { name: "алфавиту (По убыванию)", sort: "name", order: "asc" },
+];
 
 export const Home = () => {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [currentSortIndex, setCurrentCortIndex] = useState(0);
 
-  const urlParams = `?category=${currentCategoryIndex || "*"}&orderBy=${
-    SORTPARAMS[currentSortIndex]
-  }&order=desc`;
+  const makeUrlParams = () => {
+    const category = currentCategoryIndex || "*";
+    const orderBy = SORTVALUES[currentSortIndex].sort;
+    const order = SORTVALUES[currentSortIndex].order;
+    return `?category=${category}&orderBy=${orderBy}&order=${order}`;
+  };
 
-  const [pizzas, loading, error] = useGetMyPizzas(BASEURL + urlParams);
+  const [pizzas, loading, error] = useGetMyPizzas(BASEURL + makeUrlParams());
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,6 +42,7 @@ export const Home = () => {
           setCurrentCategoryIndex={setCurrentCategoryIndex}
         />
         <Sort
+          sortVariants={SORTVALUES.map((obj) => obj.name)}
           currentSortIndex={currentSortIndex}
           setCurrentCortIndex={setCurrentCortIndex}
         />

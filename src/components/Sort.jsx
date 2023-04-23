@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 
-export const Sort = ({ currentSortIndex, setCurrentCortIndex }) => {
-  const sortVariants = ["популярности", "цене", "алфавиту"];
+export const Sort = ({
+  currentSortIndex,
+  setCurrentCortIndex,
+  sortVariants,
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
