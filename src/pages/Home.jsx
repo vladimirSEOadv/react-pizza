@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
-import { Loader } from "../components/Loader";
-import Skeleton from "../components/PizzaBlock/Skeleton";
-import PizzaBlock from "../components/PizzaBlock";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
+import { BlockWrapper } from "../components/PizzaBlock/BlockWrapper";
+import { PizzaList } from "../components/PizzaList";
 
 const BASEURL = "https://6436dc673e4d2b4a12dda417.mockapi.io/items";
 
@@ -26,10 +25,11 @@ export const Home = () => {
     const orderBy = SORTVALUES[currentSortIndex].sort;
     const order = SORTVALUES[currentSortIndex].order;
     return `?category=${category}&orderBy=${orderBy}&order=${order}`;
+    // return `?category="22"&orderBy=${orderBy}&order=${order}`;
   };
 
   const [pizzas, loading, error] = useGetMyPizzas(BASEURL + makeUrlParams());
-
+  console.log("pizzas", pizzas);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pizzas]);
@@ -47,17 +47,13 @@ export const Home = () => {
           setCurrentCortIndex={setCurrentCortIndex}
         />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
+      <h2 className="content__title">
+        {Boolean(pizzas.length) && "Все пиццы"}
+      </h2>
       <div className="content__items">
-        {error && <Loader error={error} />}
-        {loading &&
-          [...new Array(6)].map((_, index) => {
-            return <Skeleton key={index} />;
-          })}
-        {pizzas.length > 0 &&
-          pizzas.map((pizza) => {
-            return <PizzaBlock {...pizza} key={pizza.id} />;
-          })}
+        <BlockWrapper error={error} loading={loading} data={pizzas}>
+          <PizzaList arrOfPizza={pizzas} />
+        </BlockWrapper>
       </div>
     </div>
   );
