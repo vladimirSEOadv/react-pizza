@@ -7,7 +7,9 @@ export const useGetMyPizzas = (link) => {
 
   // TODO refactor to async await
   useEffect(() => {
+    setPizzas((pizzas) => []);
     setLoading(true);
+    setError(null);
     fetch(link)
       .then((data) => {
         const { ok, status, statusText } = data;
