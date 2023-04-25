@@ -4,17 +4,45 @@
   border-bottom: 1px solid $gray-line;
   padding: 40px 0;
 
+  @media (max-width: 915px) {
+    padding: 20px 0;
+  }
+  @media (max-width: 615px) {
+    padding: 0 0;
+  }
+
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   &__logo {
     display: flex;
+    margin-right: 25px;
 
+    @media (max-width: 390px) {
+      margin-right: 0;
+    }
+
+    .header__logo__title{
+      @media (max-width: 700px) {
+        p {
+          display: none;
+        }
+      }
+      @media (max-width: 613px) {
+        h1 {
+          display: none;
+        }
+      }
+    }
     img {
       margin-right: 15px;
+      @media (max-width: 365px) {
+        margin-right: 0;
+      }
     }
 
     h1 {

@@ -5,6 +5,12 @@
     display: flex;
     flex-wrap: wrap;
 
+    @media (max-width: 575px) {
+      //display: block;
+      flex: 1;
+    }
+
+
     li {
       margin: 0 10px 10px 0;
       background-color: #f9f9f9;
@@ -14,6 +20,23 @@
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
       @include noselect();
+
+      @media (max-width: 575px) {
+        padding: 15px 20px;
+      }
+
+      @media (max-width: 535px) {
+        padding: 15px 20px;
+      }
+      @media (max-width: 505px) {
+        padding: 10px 15px;
+      }
+      @media (max-width: 473px) {
+        //background-color: #e3e1e1;
+        border: 1px solid #e3e1e1;
+        flex: 1;
+        margin: 0 10px 10px 0;
+      }
 
       &:hover {
         background-color: darken(#f9f9f9, 2%);
