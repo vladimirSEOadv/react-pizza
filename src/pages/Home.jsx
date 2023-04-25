@@ -33,7 +33,7 @@ export const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pizzas]);
-
+  // TODO content__title displayed even if there are no pizzas to display after the filter. After adding the store, the problem will disappear.
   return (
     <div className="container">
       <div className="content__top">
