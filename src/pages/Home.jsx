@@ -3,7 +3,7 @@ import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
 import { BlockWrapper } from "../components/PizzaBlock/BlockWrapper";
-import { PizzaList } from "../components/PizzaList";
+import { PizzaList } from "../components/PizzaList/PizzaList";
 
 const BASEURL = "https://6436dc673e4d2b4a12dda417.mockapi.io/items";
 
@@ -29,7 +29,6 @@ export const Home = () => {
   };
 
   const [pizzas, loading, error] = useGetMyPizzas(BASEURL + makeUrlParams());
-  console.log("pizzas", pizzas);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pizzas]);
