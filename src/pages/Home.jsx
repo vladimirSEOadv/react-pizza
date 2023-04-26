@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
 import { BlockWrapper } from "../components/PizzaBlock/BlockWrapper";
 import { PizzaList } from "../components/PizzaList/PizzaList";
+import { SearchContext } from "../context/searchContext";
 
 const BASEURL = "https://6436dc673e4d2b4a12dda417.mockapi.io/items";
 
@@ -18,12 +19,13 @@ const SORTVALUES = [
 
 export const Home = () => {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
-  const [currentSortIndex, setCurrentCortIndex] = useState(0);
-
+  const [currentSortIndex, setCurrentSortIndex] = useState(0);
+  const [searchValue] = useContext(SearchContext);
   const makeUrlParams = () => {
     const category = currentCategoryIndex || "*";
     const orderBy = SORTVALUES[currentSortIndex].sort;
     const order = SORTVALUES[currentSortIndex].order;
+    const search = searchValue ?? "";
     return `?category=${category}&orderBy=${orderBy}&order=${order}`;
     // return `?category="22"&orderBy=${orderBy}&order=${order}`;
   };
@@ -43,7 +45,7 @@ export const Home = () => {
         <Sort
           sortVariants={SORTVALUES.map((obj) => obj.name)}
           currentSortIndex={currentSortIndex}
-          setCurrentCortIndex={setCurrentCortIndex}
+          setCurrentSortIndex={setCurrentSortIndex}
         />
       </div>
       <h2 className="content__title">

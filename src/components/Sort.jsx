@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 export const Sort = ({
   currentSortIndex,
-  setCurrentCortIndex,
+  setCurrentSortIndex,
   sortVariants,
 }) => {
   const [open, setOpen] = useState(false);
@@ -32,7 +32,7 @@ export const Sort = ({
             {sortVariants.map((variant, index) => (
               <li
                 key={variant}
-                onClick={() => setCurrentCortIndex(index)}
+                onClick={() => setCurrentSortIndex(index)}
                 className={
                   sortVariants.indexOf(variant) === currentSortIndex
                     ? "active"
