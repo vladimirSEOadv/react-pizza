@@ -6,8 +6,8 @@ import styles from "./PizzaList.module.scss";
 export const PizzaList = ({ arrOfPizza }) => {
   const [searchValue, setSearchValue] = useContext(SearchContext);
 
-  const searchedPizzas = arrOfPizza.filter((pizza) =>
-    pizza.name.includes(searchValue)
+  const searchedPizzas = arrOfPizza.filter(
+    (pizza) => pizza.name.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0
   );
 
   return (
