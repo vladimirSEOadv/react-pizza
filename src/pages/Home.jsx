@@ -52,9 +52,9 @@ export const Home = () => {
         {Boolean(pizzas.length) && "Все пиццы"}
       </h2>
       <div className="content__items">
-        <BlockWrapper error={error} loading={loading} data={pizzas}>
-          <PizzaList arrOfPizza={pizzas} />
-        </BlockWrapper>
+        <BlockWrapper error={error} loading={loading} data={pizzas} />
+        <PizzaList error={error} arrOfPizza={pizzas} />
+        {/*<Pagination itemsPerPage={6} />*/}
       </div>
     </div>
   );
