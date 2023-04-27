@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
 import { BlockWrapper } from "../components/PizzaBlock/BlockWrapper";
 import { PizzaList } from "../components/PizzaList/PizzaList";
-import { SearchContext } from "../context/searchContext";
 
 const BASEURL = "https://6436dc673e4d2b4a12dda417.mockapi.io/items";
 
@@ -20,13 +19,14 @@ const SORTVALUES = [
 export const Home = () => {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [currentSortIndex, setCurrentSortIndex] = useState(0);
-  const [searchValue] = useContext(SearchContext);
+  // const [searchValue] = useContext(SearchContext);
+
   const makeUrlParams = () => {
-    const category = currentCategoryIndex || "*";
-    const orderBy = SORTVALUES[currentSortIndex].sort;
-    const order = SORTVALUES[currentSortIndex].order;
-    const search = searchValue ?? "";
-    return `?category=${category}&orderBy=${orderBy}&order=${order}`;
+    const category = `category=${currentCategoryIndex || "*"}`;
+    const orderBy = `&orderBy=${SORTVALUES[currentSortIndex].sort}`;
+    const order = `&order=${SORTVALUES[currentSortIndex].order}`;
+    // const search = searchValue ? `search=${searchValue}` : "";
+    return `?${category}${orderBy}${order}`;
     // return `?category="22"&orderBy=${orderBy}&order=${order}`;
   };
 
