@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import PizzaBlock from "../PizzaBlock";
+import PizzaBlock from "../PizzaBlock/PizzaBlock";
 import { SearchContext } from "../../context/searchContext";
 import styles from "./PizzaList.module.scss";
 
