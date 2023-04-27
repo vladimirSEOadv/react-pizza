@@ -13,7 +13,10 @@
   }
 
   &:nth-last-child(1) {
-    max-width: 375px;
+    max-width: 30%;
+    @media (max-width: 1199px) {
+      max-width: 50%;
+    }
     @media (max-width: 833px) {
       max-width: 450px;
     }

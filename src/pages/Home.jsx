@@ -33,12 +33,10 @@ export const Home = () => {
           setCurrentSortIndex={setCurrentSortIndex}
         />
       </div>
-      <h2 className="content__title">
-        {Boolean(pizzas.length) && "Все пиццы"}
-      </h2>
+      <h2 className="content__title">Все пиццы</h2>
       <div>
-        <BlockWrapper error={error} loading={loading} data={pizzas} />
         <div className="content__items">
+          <BlockWrapper error={error} loading={loading} data={pizzas} />
           <PizzaList error={error} arrOfPizza={pizzas} />
           {/*<Pagination itemsPerPage={6} />*/}
         </div>
