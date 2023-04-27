@@ -1,13 +1,5 @@
 import React from "react";
-
-const CATEGORIES = [
-  "Все",
-  "Мясные",
-  "Вегетарианская",
-  "Гриль",
-  "Острые",
-  "Закрытые",
-];
+import { CATEGORIES } from "../constants/categories";
 
 export const Categories = ({
   currentCategoryIndex,

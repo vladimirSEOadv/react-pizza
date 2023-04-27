@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import goBacksvg from "../assets/img/go-back.svg";
+import backSvg from "../assets/img/go-back.svg";
 
 export const Cart = () => {
   return (
@@ -173,7 +173,7 @@ export const Cart = () => {
               to="/"
               className="button button--outline button--add go-back-btn"
             >
-              <img src={goBacksvg} alt="goBacksvg" />
+              <img src={backSvg} alt="backSvg" />
               <span>Вернуться назад</span>
             </Link>
             <div className="button pay-btn">

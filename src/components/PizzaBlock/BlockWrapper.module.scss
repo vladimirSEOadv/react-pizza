@@ -1,6 +1,11 @@
-.title {
+.root {
+  display: flex;
+}
+
+.center {
   display: flex;
   justify-content: center;
   padding: 40px;
   width: 100%;
 }
+
