@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort/Sort";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
-import { BlockWrapper } from "../components/PizzaBlock/BlockWrapper";
-import { PizzaList } from "../components/PizzaList/PizzaList";
 import { BASEURL } from "../constants/baseurl";
 import { SORTVALUES } from "../constants/sortvalues";
 import { makeUrlParams } from "../utils/makeUrlParams";
+import { Pagination } from "../components/Pagination/Pagination";
 
 export const Home = () => {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
@@ -35,11 +34,12 @@ export const Home = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div>
-        <div className="content__items">
-          <BlockWrapper error={error} loading={loading} data={pizzas} />
-          <PizzaList error={error} arrOfPizza={pizzas} />
-          {/*<Pagination itemsPerPage={6} />*/}
-        </div>
+        <Pagination
+          error={error}
+          loading={loading}
+          pizzas={pizzas}
+          itemsPerPage={6}
+        />
       </div>
     </div>
   );
