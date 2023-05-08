@@ -1,13 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import PizzaBlock from "../PizzaBlock/PizzaBlock";
-import { SearchContext } from "../../context/searchContext";
 import styles from "./PizzaList.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { resetSearchValue, searchValue } from "../../redux/slices/searchSlice";
 
 export const PizzaList = ({ arrOfPizza, error }) => {
-  const [searchValue, setSearchValue] = useContext(SearchContext);
+  const mySearchValue = useSelector(searchValue);
+  const dispatch = useDispatch();
 
   const searchedPizzas = arrOfPizza.filter(
-    (pizza) => pizza.name.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0
+    (pizza) =>
+      pizza.name.toLowerCase().indexOf(mySearchValue.toLowerCase()) >= 0
   );
 
   return (
@@ -22,7 +25,9 @@ export const PizzaList = ({ arrOfPizza, error }) => {
               </div>
               <button
                 className={styles.resetButton}
-                onClick={() => setSearchValue("")}
+                onClick={() => {
+                  dispatch(resetSearchValue());
+                }}
               >
                 Сбросить поиск
               </button>
