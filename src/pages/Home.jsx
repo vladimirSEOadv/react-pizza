@@ -23,12 +23,7 @@ export const Home = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div>
-        <Pagination
-          error={error}
-          loading={loading}
-          pizzas={pizzas}
-          itemsPerPage={6}
-        />
+        <ProductCatalog error={error} loading={loading} pizzas={pizzas} />
       </div>
     </div>
   );
