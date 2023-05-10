@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort/Sort";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
-import { BASEURL } from "../constants/baseurl";
+import { BaseUrl } from "../constants/baseUrl";
 import { useCreateUrlParams } from "../utils/useCreateUrlParams";
 import { Pagination } from "../components/Pagination/Pagination";
 
 export const Home = () => {
   const urlParams = useCreateUrlParams();
 
-  const [pizzas, loading, error] = useGetMyPizzas(BASEURL + urlParams);
+  const [pizzas, loading, error] = useGetMyPizzas(BaseUrl + urlParams);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pizzas]);
