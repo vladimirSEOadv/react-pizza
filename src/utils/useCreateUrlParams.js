@@ -1,12 +1,10 @@
 import { SortValues } from "../constants/sortValues";
 import { useSelector } from "react-redux";
-import { categoryIndex, sortIndex } from "../redux/slices/filtersSlice";
 
 export const useCreateUrlParams = () => {
-  const currentSortIndex = useSelector(sortIndex);
-  const currentCategoryIndex = useSelector(categoryIndex);
-  const category = `category=${currentCategoryIndex || "*"}`;
-  const orderBy = `&orderBy=${SortValues[currentSortIndex].sort}`;
-  const order = `&order=${SortValues[currentSortIndex].order}`;
+  const { sortIndex, categoryIndex } = useSelector((state) => state.filters);
+  const category = `category=${categoryIndex || "*"}`;
+  const orderBy = `&orderBy=${SortValues[sortIndex].sort}`;
+  const order = `&order=${SortValues[sortIndex].order}`;
   return `?${category}${orderBy}${order}`;
 };
