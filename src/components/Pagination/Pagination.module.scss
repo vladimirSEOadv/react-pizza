@@ -32,3 +32,20 @@
     }
   }
 }
+.title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  flex: 1;
+}
+
+.resetButton {
+  margin: 0 auto 50px auto ;
+  padding: 15px;
+  border-radius: 15px;
+  font-size: 16px;
+
+  &:hover{
+    background-color: #fe5f1e;
+  }
+}

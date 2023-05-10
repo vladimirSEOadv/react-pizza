@@ -5,7 +5,6 @@ import searchSvg from "../../assets/img/search-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   currentSearchValue,
-  resetSearchValue,
   setSearchValue,
 } from "../../redux/slices/filtersSlice";
 
@@ -22,7 +21,7 @@ export const Search = () => {
               className={styles.closeSvg}
               src={closeSvg}
               onClick={() => {
-                dispatch(resetSearchValue());
+                dispatch(setSearchValue(""));
               }}
               alt="close"
             />

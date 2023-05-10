@@ -1,6 +1,6 @@
 import React from "react";
-import { CATEGORIES } from "../constants/categories";
-import { setCategoryIndex } from "../redux/slices/filtersSlice";
+import { CATEGORIES } from "../../constants/categories";
+import { setCategoryIndex } from "../../redux/slices/filtersSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const Categories = () => {
@@ -13,7 +13,7 @@ export const Categories = () => {
           return (
             <li
               key={nameCategory}
-              className={categoryIndex === index ? "active" : ""}
+              className={categoryIndex === index ? "active-category" : ""}
               onClick={() => dispatch(setCategoryIndex(index))}
             >
               {nameCategory}

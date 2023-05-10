@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { Categories } from "../components/Categories";
+import { Categories } from "../components/Categories/Categories";
 import { Sort } from "../components/Sort/Sort";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
 import { BaseUrl } from "../constants/baseUrl";
 import { useCreateUrlParams } from "../utils/useCreateUrlParams";
-import { Pagination } from "../components/Pagination/Pagination";
+import { ProductCatalog } from "../components/Pagination/ProductCatalog";
 
 export const Home = () => {
   const urlParams = useCreateUrlParams();
