@@ -3,7 +3,6 @@ import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort/Sort";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
 import { BASEURL } from "../constants/baseurl";
-import { SORTVALUES } from "../constants/sortvalues";
 import { useCreateUrlParams } from "../utils/useCreateUrlParams";
 import { Pagination } from "../components/Pagination/Pagination";
 
@@ -20,7 +19,7 @@ export const Home = () => {
     <div className="container">
       <div className="content__top">
         <Categories />
-        <Sort sortVariants={SORTVALUES.map((obj) => obj.name)} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div>

@@ -1,4 +1,4 @@
-export const SORTVALUES = [
+export const SortValues = [
   { name: "популярности (По возрастанию)", sort: "rating", order: "desc" },
   { name: "популярности (По убыванию)", sort: "rating", order: "asc" },
   { name: "цене (По возрастанию)", sort: "price", order: "desc" },
