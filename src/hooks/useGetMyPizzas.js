@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { BaseUrl } from "../constants/baseUrl";
+import { useCreateUrlParams } from "../utils/useCreateUrlParams";
 
-export const useGetMyPizzas = (link) => {
+export const useGetMyPizzas = () => {
   const [pizzas, setPizzas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const urlParams = useCreateUrlParams();
 
   function preparingForANewRequest() {
     setPizzas([]);
@@ -27,8 +31,8 @@ export const useGetMyPizzas = (link) => {
 
   useEffect(() => {
     preparingForANewRequest();
-    fetchData(link);
-  }, [link]);
+    fetchData(BaseUrl + urlParams);
+  }, [BaseUrl, urlParams]);
 
   return [pizzas, loading, error];
 };
