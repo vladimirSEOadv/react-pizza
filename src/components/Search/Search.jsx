@@ -4,13 +4,13 @@ import closeSvg from "../../assets/img/close-svg-icon.svg";
 import searchSvg from "../../assets/img/search-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  currentSearchValue,
   resetSearchValue,
-  searchValue,
   setSearchValue,
-} from "../../redux/slices/searchSlice";
+} from "../../redux/slices/filtersSlice";
 
 export const Search = () => {
-  const mySearchValue = useSelector(searchValue);
+  const mySearchValue = useSelector(currentSearchValue);
   const dispatch = useDispatch();
   return (
     <div className={styles.root}>

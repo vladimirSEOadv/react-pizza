@@ -2,15 +2,17 @@ import React from "react";
 import PizzaBlock from "../PizzaBlock/PizzaBlock";
 import styles from "./PizzaList.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { resetSearchValue, searchValue } from "../../redux/slices/searchSlice";
+import {
+  currentSearchValue,
+  resetSearchValue,
+} from "../../redux/slices/filtersSlice";
 
 export const PizzaList = ({ arrOfPizza, error }) => {
-  const mySearchValue = useSelector(searchValue);
+  const searchValue = useSelector(currentSearchValue);
   const dispatch = useDispatch();
 
   const searchedPizzas = arrOfPizza.filter(
-    (pizza) =>
-      pizza.name.toLowerCase().indexOf(mySearchValue.toLowerCase()) >= 0
+    (pizza) => pizza.name.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0
   );
 
   return (

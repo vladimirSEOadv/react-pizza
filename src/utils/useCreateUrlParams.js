@@ -1,10 +1,12 @@
 import { SORTVALUES } from "../constants/sortvalues";
-// const [searchValue] = useContext(SearchContext);
+import { useSelector } from "react-redux";
+import { categoryIndex, sortIndex } from "../redux/slices/filtersSlice";
 
-export const makeUrlParams = (currentCategoryIndex, currentSortIndex) => {
+export const useCreateUrlParams = () => {
+  const currentSortIndex = useSelector(sortIndex);
+  const currentCategoryIndex = useSelector(categoryIndex);
   const category = `category=${currentCategoryIndex || "*"}`;
   const orderBy = `&orderBy=${SORTVALUES[currentSortIndex].sort}`;
   const order = `&order=${SORTVALUES[currentSortIndex].order}`;
-  // const search = searchValue ? `search=${searchValue}` : "";
   return `?${category}${orderBy}${order}`;
 };
