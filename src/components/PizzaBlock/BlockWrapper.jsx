@@ -4,9 +4,7 @@ import Skeleton from "./Skeleton";
 import styles from "./BlockWrapper.module.scss";
 
 export const BlockWrapper = ({ error, loading, data }) => {
-  // debugger;
   return (
-    // <div className={styles.root}>
     <>
       {error ? (
         <Loader error={error} />
