@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { makeInitialStateOfUrlParams } from "../makeInitialStateOfUrlParams";
 
-const initialState = {
-  searchQuery: "",
-  sortIndex: 0,
-  categoryIndex: 0,
-  pagination: {
-    itemsPerPage: 3,
-    pageCount: 0,
-    itemOffset: 0,
-  },
-};
+const haveParams = Boolean(window.location.search);
+
+const initialState = haveParams
+  ? makeInitialStateOfUrlParams(window.location.search)
+  : {
+      categoryIndex: 0,
+      sortIndex: 0,
+      searchQuery: "",
+    };
 
 export const filtersSlice = createSlice({
   name: "filters",
@@ -17,21 +17,20 @@ export const filtersSlice = createSlice({
   reducers: {
     setSearchValue: (state, action) => {
       state.searchQuery = action.payload;
-      state.pagination.itemOffset = 0;
     },
     setSortIndex: (state, action) => {
       state.sortIndex = action.payload;
-      state.pagination.itemOffset = 0;
     },
     setCategoryIndex: (state, action) => {
       state.categoryIndex = action.payload;
-      state.pagination.itemOffset = 0;
     },
-    setItemOffset: (state, action) => {
-      state.pagination.itemOffset = action.payload;
-    },
-    setPageCount: (state, action) => {
-      state.pagination.pageCount = action.payload;
+    setFilterParams: (state, action) => {
+      state.categoryIndex =
+        action.payload?.category === "*" || undefined
+          ? 0
+          : action.payload.category;
+      state.sortIndex = action.payload.sortIndex;
+      state.searchQuery = action.payload.search || "";
     },
   },
 });
@@ -44,8 +43,7 @@ export const {
   setSearchValue,
   setSortIndex,
   setCategoryIndex,
-  setItemOffset,
-  setPageCount,
+  setFilterParams,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

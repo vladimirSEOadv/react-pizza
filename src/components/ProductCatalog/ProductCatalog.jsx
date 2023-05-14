@@ -3,11 +3,12 @@ import ReactPaginate from "react-paginate";
 import { BlockWrapper } from "../PizzaBlock/BlockWrapper";
 import styles from "./ProductCatalog.module.scss";
 import { useDispatch, useSelector } from "react-redux";
+import { setSearchValue } from "../../redux/slices/filtersSlice";
 import {
   setItemOffset,
   setPageCount,
-  setSearchValue,
-} from "../../redux/slices/filtersSlice";
+} from "../../redux/slices/paginationSlice";
+
 import PizzaBlock from "../PizzaBlock/PizzaBlock";
 
 export function ProductCatalog({ pizzas, error, loading }) {
@@ -20,7 +21,7 @@ export function ProductCatalog({ pizzas, error, loading }) {
       : pizzas.filter((pizza) => pizza.category === currentCategory);
 
   const { itemsPerPage, pageCount, itemOffset } = useSelector(
-    (state) => state.filters.pagination
+    (state) => state.pagination
   );
 
   const endOffset = itemOffset + itemsPerPage;
@@ -59,6 +60,7 @@ export function ProductCatalog({ pizzas, error, loading }) {
             className={styles.resetButton}
             onClick={() => {
               dispatch(setSearchValue(""));
+              dispatch(setItemOffset(0));
             }}
           >
             Сбросить поиск

@@ -8,6 +8,7 @@ import {
   setSearchValue,
 } from "../../redux/slices/filtersSlice";
 import debounce from "lodash.debounce";
+import { setItemOffset } from "../../redux/slices/paginationSlice";
 
 export const Search = () => {
   const mySearchValue = useSelector(currentSearchValue);
@@ -17,18 +18,20 @@ export const Search = () => {
   const onclickHandler = () => {
     setLocalSearchValue("");
     dispatch(setSearchValue(""));
+    dispatch(setItemOffset(0));
   };
 
-  const testDebounce = useCallback(
+  const debounceFunc = useCallback(
     debounce((value) => {
       dispatch(setSearchValue(value.trim()));
+      dispatch(setItemOffset(0));
     }, 700),
-    [setSearchValue]
+    []
   );
 
   const inputHandler = (e) => {
     setLocalSearchValue(e.target.value);
-    testDebounce(e.target.value);
+    debounceFunc(e.target.value);
   };
 
   return (

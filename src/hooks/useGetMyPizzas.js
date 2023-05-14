@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { BaseUrl } from "../constants/baseUrl";
 import { useCreateUrlParams } from "../utils/useCreateUrlParams";
@@ -16,23 +16,29 @@ export const useGetMyPizzas = () => {
     setLoading(true);
   }
 
-  async function fetchData(url) {
+  function checkResponseStatus(res) {
+    const { status, statusText } = res;
+    if (status !== 200) throw new Error(`${status} ${statusText}`);
+  }
+
+  const fetchData = useCallback(async (url) => {
     try {
       const response = await axios.get(url);
-      const { status, statusText } = response;
-      if (status !== 200) throw new Error(`${status} ${statusText}`);
+      checkResponseStatus(response);
       setPizzas(response.data);
     } catch (error) {
       setError(error);
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
   useEffect(() => {
     preparingForANewRequest();
-    fetchData(BaseUrl + urlParams);
-  }, [BaseUrl, urlParams]);
+    fetchData(BaseUrl + urlParams).catch((error) =>
+      console.log("error in useGetMyPizzas hook", error)
+    );
+  }, [urlParams, fetchData]);
 
   return [pizzas, loading, error];
 };

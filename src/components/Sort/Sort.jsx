@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import SortSvg from "./SortSvg";
 import { useDispatch, useSelector } from "react-redux";
 import { setSortIndex, sortIndex } from "../../redux/slices/filtersSlice";
-import { SortValues } from "../../constants/sortValues";
+import { sortValues } from "../../constants/sortValues";
+import { setItemOffset } from "../../redux/slices/paginationSlice";
 
 export const Sort = () => {
   const dispatch = useDispatch();
   const currentSortIndex = useSelector(sortIndex);
-  const sortVariants = SortValues.map((obj) => obj.name);
+  const sortVariants = sortValues.map((obj) => obj.name);
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,7 +24,10 @@ export const Sort = () => {
             {sortVariants.map((variant, index) => (
               <li
                 key={variant}
-                onClick={() => dispatch(setSortIndex(index))}
+                onClick={() => {
+                  dispatch(setSortIndex(index));
+                  dispatch(setItemOffset(0));
+                }}
                 className={
                   sortVariants.indexOf(variant) === currentSortIndex
                     ? "active"

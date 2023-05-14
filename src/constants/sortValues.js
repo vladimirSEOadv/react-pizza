@@ -1,8 +1,18 @@
-export const SortValues = [
-  { name: "популярности (По возрастанию)", sort: "rating", order: "desc" },
-  { name: "популярности (По убыванию)", sort: "rating", order: "asc" },
-  { name: "цене (По возрастанию)", sort: "price", order: "desc" },
-  { name: "цене (По убыванию)", sort: "price", order: "asc" },
-  { name: "алфавиту (По возрастанию)", sort: "name", order: "desc" },
-  { name: "алфавиту (По убыванию)", sort: "name", order: "asc" },
+export const sortValues = [
+  {
+    name: "популярности (По возрастанию)",
+    orderBy: "rating",
+    order: "desc",
+    id: 0,
+  },
+  {
+    name: "популярности (По убыванию)",
+    orderBy: "rating",
+    order: "asc",
+    id: 1,
+  },
+  { name: "цене (По возрастанию)", orderBy: "price", order: "desc", id: 2 },
+  { name: "цене (По убыванию)", orderBy: "price", order: "asc", id: 3 },
+  { name: "алфавиту (По возрастанию)", orderBy: "name", order: "desc", id: 4 },
+  { name: "алфавиту (По убыванию)", orderBy: "name", order: "asc", id: 5 },
 ];
