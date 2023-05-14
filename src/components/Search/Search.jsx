@@ -21,9 +21,9 @@ export const Search = () => {
 
   const testDebounce = useCallback(
     debounce((value) => {
-      dispatch(setSearchValue(value));
+      dispatch(setSearchValue(value.trim()));
     }, 700),
-    []
+    [setSearchValue]
   );
 
   const inputHandler = (e) => {
