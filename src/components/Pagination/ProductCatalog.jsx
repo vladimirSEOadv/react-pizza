@@ -4,7 +4,6 @@ import { BlockWrapper } from "../PizzaBlock/BlockWrapper";
 import styles from "./Pagination.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  currentSearchValue,
   setItemOffset,
   setPageCount,
   setSearchValue,
@@ -13,26 +12,30 @@ import PizzaBlock from "../PizzaBlock/PizzaBlock";
 
 export function ProductCatalog({ pizzas, error, loading }) {
   const dispatch = useDispatch();
+  const currentCategory = useSelector((state) => state.filters.categoryIndex);
 
-  const searchValue = useSelector(currentSearchValue);
-  const searchedPizzas = pizzas.filter(
-    (pizza) => pizza.name.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0
-  );
+  const pizzasFilteredByCategory =
+    currentCategory === 0
+      ? pizzas
+      : pizzas.filter((pizza) => pizza.category === currentCategory);
 
   const { itemsPerPage, pageCount, itemOffset } = useSelector(
     (state) => state.filters.pagination
   );
 
   const endOffset = itemOffset + itemsPerPage;
-  const paginateSlice = searchedPizzas.slice(itemOffset, endOffset);
+  const paginateSlice = pizzasFilteredByCategory.slice(itemOffset, endOffset);
 
   useEffect(() => {
-    const newPageCount = Math.ceil(searchedPizzas.length / itemsPerPage);
+    const newPageCount = Math.ceil(
+      pizzasFilteredByCategory.length / itemsPerPage
+    );
     dispatch(setPageCount(newPageCount));
-  }, [searchedPizzas, itemsPerPage]);
+  }, [pizzasFilteredByCategory, itemsPerPage, dispatch]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % searchedPizzas.length;
+    const newOffset =
+      (event.selected * itemsPerPage) % pizzasFilteredByCategory.length;
     dispatch(setItemOffset(newOffset));
     window.scrollTo(0, 0);
   };
@@ -40,9 +43,13 @@ export function ProductCatalog({ pizzas, error, loading }) {
   const currentBlock = () => {
     if (error || loading || pizzas.length === 0) {
       return (
-        <BlockWrapper error={error} loading={loading} data={searchedPizzas} />
+        <BlockWrapper
+          error={error}
+          loading={loading}
+          data={pizzasFilteredByCategory}
+        />
       );
-    } else if (searchedPizzas === 0) {
+    } else if (pizzasFilteredByCategory === 0) {
       return (
         <>
           <div style={{ width: "100%" }}>
