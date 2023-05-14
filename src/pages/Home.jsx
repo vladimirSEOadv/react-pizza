@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Categories } from "../components/Categories/Categories";
 import { Sort } from "../components/Sort/Sort";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
-import { ProductCatalog } from "../components/Pagination/ProductCatalog";
+import { ProductCatalog } from "../components/ProductCatalog/ProductCatalog";
 
 export const Home = () => {
   const [pizzas, loading, error] = useGetMyPizzas();

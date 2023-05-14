@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { BlockWrapper } from "../PizzaBlock/BlockWrapper";
-import styles from "./Pagination.module.scss";
+import styles from "./ProductCatalog.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setItemOffset,
