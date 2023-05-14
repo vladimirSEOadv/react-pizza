@@ -5,7 +5,7 @@ const initialState = {
   sortIndex: 0,
   categoryIndex: 0,
   pagination: {
-    itemsPerPage: 6,
+    itemsPerPage: 3,
     pageCount: 0,
     itemOffset: 0,
   },
