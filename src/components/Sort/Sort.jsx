@@ -10,7 +10,6 @@ export const Sort = () => {
   const currentSortIndex = useSelector(sortIndex);
   const sortVariants = sortValues.map((obj) => obj.name);
   const [open, setOpen] = useState(false);
-
   return (
     <div className="sort" onClick={() => setOpen(!open)}>
       <div className="sort__label">
