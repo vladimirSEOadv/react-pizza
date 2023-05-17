@@ -2,7 +2,7 @@ import "./scss/app.scss";
 import { Header } from "./components/Header/Header";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
-import { Cart } from "./pages/Cart";
+import { Cart } from "./pages/Cart/Cart";
 import { NotFound } from "./pages/NotFound";
 import React from "react";
 
