@@ -23,17 +23,15 @@ export const Cart = () => {
   };
 
   const makeArrOfPizza = (cart) => {
-    console.log("cart", cart);
-    if (Object.keys(cart) === 0) {
+    if (Object.keys(cart).length === 0) {
       return [];
     } else {
       const result = [];
       for (let pizzaId in cart) {
-        const { name, imageUrl, variants } = cart[pizzaId];
-        console.log(variants);
-        console.log("pizzaId", pizzaId);
+        const { name, imageUrl } = cart[pizzaId];
         for (let variant of cart[pizzaId].variants) {
           result.push({
+            id: pizzaId,
             name,
             imageUrl,
             size: variant.size,
@@ -43,7 +41,6 @@ export const Cart = () => {
           });
         }
       }
-      console.log("result", result);
       return result;
     }
   };
@@ -69,6 +66,7 @@ export const Cart = () => {
                   <CartItem
                     // TODO key не идеален но должен быть достаточно уникален
                     key={`${pizza.count}${pizza.name}${pizza.price}`}
+                    id={pizza.id}
                     name={pizza.name}
                     price={pizza.price}
                     count={pizza.count}

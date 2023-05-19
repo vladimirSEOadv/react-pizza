@@ -7,8 +7,9 @@ const initialState = {
   //     imageUrl:
   //       "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/d48003cd-902c-420d-9f28-92d9dc5f73b4.jpg",
   //     variants: [
-  //       { size: 0, type: 'тонкое', count: 1 price: 450 },
-  //       { size: 1, type: 'тонкое', count: 1 rice: 450 },
+  //       { size: 26, type: 'тонкое', count: 1 price: 450 },
+  //       { size: 30, type: 'тонкое', count: 1 rice: 450 },
+  //       { size: 30, type: 'традиционное', count: 1 rice: 450 },
   //     ],
   //   },
   // },
@@ -50,6 +51,44 @@ export const cartSlice = createSlice({
       state.totalPrice = 0;
       state.itemsCountInCart = 0;
     },
+    changeCountOfItemInCart: (state, action) => {
+      const { id, size, type, changeType } = action.payload;
+      const index = state.items[id].variants.findIndex((variant) => {
+        return variant["size"] === size && variant["type"] === type;
+      });
+      if (index === -1) {
+        throw new Error("id in changeCountOfItemInCart action now found");
+      }
+
+      switch (changeType) {
+        case "increment":
+          state.items[id].variants[index].count++;
+          state.itemsCountInCart++;
+          state.totalPrice += state.items[id].variants[index].price;
+          break;
+        case "decrement":
+          state.items[id].variants[index].count--;
+          state.itemsCountInCart--;
+          state.totalPrice -= state.items[id].variants[index].price;
+          break;
+        default:
+          console.log("unknown changeType in changeCountOfItemInCart action");
+          break;
+      }
+    },
+    deleteItemInCart: (state, action) => {
+      const { id, size, type } = action.payload;
+      const index = state.items[id].variants.findIndex((variant) => {
+        return variant["size"] === size && variant["type"] === type;
+      });
+      if (index === -1) {
+        throw new Error("id in deleteItemInCart action now found");
+      }
+      const { price, count } = state.items[id].variants[index];
+      state.items[id].variants.splice(index, 1);
+      state.itemsCountInCart -= count;
+      state.totalPrice -= price * count;
+    },
   },
 });
 
@@ -57,6 +96,7 @@ export const cartItems = (state) => state.cart.items;
 export const totalPrice = (state) => state.cart.totalPrice;
 export const numberOfItemsInCart = (state) => state.cart.itemsCountInCart;
 
-export const { addItem, clearCart } = cartSlice.actions;
+export const { addItem, clearCart, changeCountOfItemInCart, deleteItemInCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

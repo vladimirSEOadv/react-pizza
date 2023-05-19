@@ -1,9 +1,18 @@
 import React from "react";
-import { SvgDecrementQuantityOfGoods } from "./SvgDecrementQuantityOfGoods";
-import { SvgIncrementQuantityOfGoods } from "./SvgIncrementQuantityOfGoods";
-import { SvgCrossOnDeleteButton } from "./SvgCrossOnDeleteButton";
+import { svgCrossOnDeleteButton } from "./svgCrossOnDeleteButton";
+import { useDispatch } from "react-redux";
+import { deleteItemInCart } from "../../redux/slices/cartSlice";
+import { CartItemCounter } from "./CartItemCounter";
 
-export const CartItem = ({ name, price, count, size, type, imageUrl }) => {
+export const CartItem = ({ id, name, price, count, size, type, imageUrl }) => {
+  const dispatch = useDispatch();
+
+  function removeItemOfCart(e) {
+    if (e.currentTarget.classList.contains("remove")) {
+      dispatch(deleteItemInCart({ id, size, type }));
+    }
+  }
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -15,22 +24,17 @@ export const CartItem = ({ name, price, count, size, type, imageUrl }) => {
           {type} тесто, {size} см.
         </p>
       </div>
-      <div className="cart__item-count">
-        <div className="button button--outline button--circle cart__item-count-minus">
-          <SvgDecrementQuantityOfGoods />
-        </div>
-        <b>{count}</b>
-        <div className="button button--outline button--circle cart__item-count-plus">
-          <SvgIncrementQuantityOfGoods />
-        </div>
-      </div>
+      <CartItemCounter type={type} count={count} size={size} id={id} />
       <div className="cart__item-price">
         <b>{price} ₴</b>
       </div>
       <div className="cart__item-remove">
-        <div className="button button--outline button--circle">
-          <SvgCrossOnDeleteButton />
-        </div>
+        <button
+          className="button button--outline button--circle remove"
+          onClick={removeItemOfCart}
+        >
+          {svgCrossOnDeleteButton}
+        </button>
       </div>
     </div>
   );
