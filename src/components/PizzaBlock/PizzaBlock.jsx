@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
 import { typesOfDough } from "../../constants/typesOfDough";
 import { svgButtonAddToCart } from "./svgButtonAddToCart";
@@ -8,7 +8,17 @@ import { calculatePrice } from "./calculatePrice";
 const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
   const dispatch = useDispatch();
 
-  const [pizzaCount, setPizzaCount] = useState(0);
+  const pizzaCount = useSelector((state) => {
+    const idIsExistInCart = state.cart.items?.[id];
+    if (idIsExistInCart) {
+      return state.cart.items?.[id].variants.reduce((acc, variant) => {
+        acc += variant.count;
+        return acc;
+      }, 0);
+    } else {
+      return 0;
+    }
+  });
 
   const initialState = {
     size: sizes[0],
@@ -24,7 +34,6 @@ const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
   const [currentVariant, setCurrentVariant] = useState(initialState);
 
   function addToCartHandler(addedVariant) {
-    setPizzaCount((pizzaCount) => pizzaCount + 1);
     dispatch(
       addItem({
         id,
@@ -35,12 +44,12 @@ const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
     );
   }
 
-  function pickTypeHandler(newType) {
+  function pickTypeHandler(newType, basePrice) {
     setCurrentVariant((oldVariant) => {
       const newPrice = calculatePrice({
         currentType: newType,
         currentSize: oldVariant.size,
-        basePrice: price,
+        basePrice,
         sizes,
       });
       return {
@@ -51,12 +60,12 @@ const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
     });
   }
 
-  function pickSizeHandler(newSize) {
+  function pickSizeHandler(newSize, basePrice) {
     setCurrentVariant((oldVariant) => {
       const newPrice = calculatePrice({
         currentType: oldVariant.type,
         currentSize: newSize,
-        basePrice: price,
+        basePrice,
         sizes,
       });
       return {
@@ -80,7 +89,7 @@ const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
                 className={
                   currentVariant.type === typesOfDough[typeId] ? "active" : ""
                 }
-                onClick={() => pickTypeHandler(typesOfDough[typeId])}
+                onClick={() => pickTypeHandler(typesOfDough[typeId], price)}
               >
                 {typesOfDough[typeId]}
               </li>
@@ -91,7 +100,7 @@ const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
           {sizes.map((size, index) => {
             return (
               <li
-                onClick={() => pickSizeHandler(size)}
+                onClick={() => pickSizeHandler(size, price)}
                 className={currentVariant.size === sizes[index] ? "active" : ""}
                 key={sizes[index]}
               >

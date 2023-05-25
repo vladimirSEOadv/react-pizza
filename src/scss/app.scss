@@ -154,7 +154,8 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      //width: 13%;
+      width: 100%;
+      max-width: 110px;
       margin-left: auto;
 
       &-minus {
@@ -175,7 +176,8 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      //width: 25%;
+      width: 100%;
+      max-width: 100px;
       margin: 0 25px;
 
       b {
@@ -284,7 +286,7 @@ body {
 
   &--empty {
     margin: 0 auto;
-    width: 560px;
+    width: 100%;
     text-align: center;
 
     h2 {
@@ -306,13 +308,19 @@ body {
 
     img {
       display: block;
-      width: 300px;
+      width: 100%;
+      max-width: 300px;
       margin: 45px auto 60px;
+      @media (max-width: 425px) {
+        margin: 25px auto 30px;
+        max-width: 200px;
+      }
     }
 
     .button--black {
       padding: 12px 0 14px;
-      width: 230px;
+      width: 100%;
+      max-width: 230px;
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;

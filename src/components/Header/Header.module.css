@@ -1,4 +1,6 @@
 .totalInCart {
     margin-top: 3px;
     margin-left: 3px;
+    width: 100%;
+    max-width: 4px;
 }

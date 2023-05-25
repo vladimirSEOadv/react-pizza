@@ -11,6 +11,7 @@ import {
   numberOfItemsInCart,
   totalPrice,
 } from "../../redux/slices/cartSlice";
+import { EmptyCart } from "../../components/CartItem/EmptyCart";
 
 export const Cart = () => {
   const dispatch = useDispatch();
@@ -47,25 +48,25 @@ export const Cart = () => {
   const arrOfPizza = makeArrOfPizza(items);
 
   return (
-    <div className="container container--cart">
-      <div className="cart">
-        <div className="cart__top">
-          <h2 className="content__title">
-            {SvgCartIcon}
-            Корзина
-          </h2>
-          <div className="cart__clear">
-            {SvgCartClear}
-            <span onClick={clearCartHandler}>Очистить корзину</span>
-          </div>
-        </div>
-        <div className="content__items">
-          {arrOfPizza.length
-            ? arrOfPizza.map((pizza) => {
+    <>
+      <div className="container container--cart">
+        {arrOfPizza.length !== 0 ? (
+          <div className="cart">
+            <div className="cart__top">
+              <h2 className="content__title">
+                {SvgCartIcon}
+                Корзина
+              </h2>
+              <div className="cart__clear">
+                {SvgCartClear}
+                <span onClick={clearCartHandler}>Очистить корзину</span>
+              </div>
+            </div>
+            <div className="content__items">
+              {arrOfPizza.map((pizza) => {
                 return (
                   <CartItem
-                    // TODO key не идеален но должен быть достаточно уникален
-                    key={`${pizza.count}${pizza.name}${pizza.price}`}
+                    key={pizza.id}
                     id={pizza.id}
                     name={pizza.name}
                     price={pizza.price}
@@ -75,34 +76,37 @@ export const Cart = () => {
                     imageUrl={pizza.imageUrl}
                   />
                 );
-              })
-            : "Корзина пуста"}
-        </div>
-        <div className="cart__bottom">
-          <div className="cart__bottom-details">
-            <span>
-              {" "}
-              Всего пицц: <b>{itemCount} шт.</b>{" "}
-            </span>
-            <span>
-              {" "}
-              Сумма заказа: <b>{price} ₴</b>{" "}
-            </span>
-          </div>
-          <div className="cart__bottom-buttons">
-            <Link
-              to="/"
-              className="button button--outline button--add go-back-btn"
-            >
-              <img src={backSvg} alt="backSvg" />
-              <span>Вернуться назад</span>
-            </Link>
-            <div className="button pay-btn">
-              <span>Оплатить сейчас</span>
+              })}
+            </div>
+            <div className="cart__bottom">
+              <div className="cart__bottom-details">
+                <span>
+                  {" "}
+                  Всего пицц: <b>{itemCount} шт.</b>{" "}
+                </span>
+                <span>
+                  {" "}
+                  Сумма заказа: <b>{price} ₴</b>{" "}
+                </span>
+              </div>
+              <div className="cart__bottom-buttons">
+                <Link
+                  to="/"
+                  className="button button--outline button--add go-back-btn"
+                >
+                  <img src={backSvg} alt="backSvg" />
+                  <span>Вернуться назад</span>
+                </Link>
+                <div className="button pay-btn">
+                  <span>Оплатить сейчас</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <EmptyCart />
+        )}
       </div>
-    </div>
+    </>
   );
 };
