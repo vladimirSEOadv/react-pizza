@@ -1,9 +1,5 @@
-export const calculatePrice = ({
-  currentType,
-  currentSize,
-  basePrice,
-  sizes,
-}) => {
+export const calculatePrice = (obj) => {
+  const { currentType, currentSize, basePrice, sizes } = obj;
   let newPrice = basePrice;
   if (currentType === "традиционное") {
     newPrice += basePrice * 0.2;
