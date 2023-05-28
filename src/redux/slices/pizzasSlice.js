@@ -27,6 +27,8 @@ export const pizzasSlice = createSlice({
     },
   },
   extraReducers: {
+    // Todo заменить нотацию объявления на builder-callback-notation
+    // https://redux-toolkit.js.org/api/createReducer#usage-with-the-builder-callback-notation
     [fetchPizzas.pending]: (state) => {
       state.status = "loading";
     },
