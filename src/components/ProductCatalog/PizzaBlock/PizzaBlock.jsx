@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../redux/slices/cartSlice";
-import { typesOfDough } from "../../constants/typesOfDough";
+import { addItem } from "../../../redux/slices/cartSlice";
+import { typesOfDough } from "../../../constants/typesOfDough";
 import { svgButtonAddToCart } from "./svgButtonAddToCart";
 import { calculatePrice } from "./calculatePrice";
 

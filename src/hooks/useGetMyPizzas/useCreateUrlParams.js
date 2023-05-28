@@ -1,4 +1,4 @@
-import { sortValues } from "../constants/sortValues";
+import { sortValues } from "../../constants/sortValues";
 import { useSelector } from "react-redux";
 import qs from "qs";
 import { useEffect, useRef } from "react";

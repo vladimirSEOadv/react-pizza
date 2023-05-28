@@ -1,0 +1,9 @@
+.skeletonWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    @media (max-width: 833px) {
+        justify-content: center;
+    }
+}

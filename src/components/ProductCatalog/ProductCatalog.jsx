@@ -1,24 +1,34 @@
 import React, { useEffect } from "react";
 import ReactPaginate from "react-paginate";
-import { BlockWrapper } from "../PizzaBlock/BlockWrapper";
-import styles from "./ProductCatalog.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchValue } from "../../redux/slices/filtersSlice";
+import PizzaBlock from "./PizzaBlock/PizzaBlock";
 import {
   setItemOffset,
   setPageCount,
 } from "../../redux/slices/paginationSlice";
+import styles from "./ProductCatalog.module.scss";
+import { ErrorDisplayPanel } from "./ErrorDisplayPanel/ErrorDisplayPanel";
+import Skeleton from "./Skeleton/Skeleton";
+import { EmptySearchResult } from "./EmptySearchResult/EmptySearchResult";
+import { setStatus } from "../../redux/slices/pizzasSlice";
 
-import PizzaBlock from "../PizzaBlock/PizzaBlock";
-
-export function ProductCatalog({ pizzas, error, loading }) {
+export function ProductCatalog() {
   const dispatch = useDispatch();
-  const currentCategory = useSelector((state) => state.filters.categoryIndex);
+  const { items: pizzas, status, error } = useSelector((state) => state.pizzas);
 
+  const currentCategory = useSelector((state) => state.filters.categoryIndex);
+  const currentSearchQuery = useSelector((state) => state.filters.searchQuery);
+
+  // Технически можно убрать, так как фильтрация вшита в запросы,
+  // но бекенд mockapi.io не умеет применять query параметры по поисковому запросу и категории одновременно.
   const pizzasFilteredByCategory =
     currentCategory === 0
       ? pizzas
       : pizzas.filter((pizza) => pizza.category === currentCategory);
+
+  if (currentSearchQuery !== "" && pizzasFilteredByCategory.length === 0) {
+    dispatch(setStatus("no results after filtering"));
+  }
 
   const { itemsPerPage, pageCount, itemOffset } = useSelector(
     (state) => state.pagination
@@ -41,42 +51,34 @@ export function ProductCatalog({ pizzas, error, loading }) {
     window.scrollTo(0, 0);
   };
 
-  const currentBlock = () => {
-    if (error || loading || pizzas.length === 0) {
-      return (
-        <BlockWrapper
-          error={error}
-          loading={loading}
-          data={pizzasFilteredByCategory}
-        />
-      );
-    } else if (pizzasFilteredByCategory === 0) {
-      return (
-        <>
-          <div style={{ width: "100%" }}>
-            <h2 className={styles.title}>Таких пицц нет</h2>
-          </div>
-          <button
-            className={styles.resetButton}
-            onClick={() => {
-              dispatch(setSearchValue(""));
-              dispatch(setItemOffset(0));
-            }}
-          >
-            Сбросить поиск
-          </button>
-        </>
-      );
-    } else {
-      return paginateSlice.map((item) => {
-        return <PizzaBlock {...item} key={item.id} />;
-      });
+  const getCurrentBlock = (status) => {
+    switch (status) {
+      case "error":
+        return <ErrorDisplayPanel error={error} />;
+      case "loading":
+        return <Skeleton />;
+      case "empty data in response":
+        return <h1 className={styles.center}>Данных нет</h1>;
+      case "no results after filtering":
+        return <EmptySearchResult />;
+      case "success":
+        return paginateSlice.map((item) => {
+          return <PizzaBlock {...item} key={item.id} />;
+        });
+      default:
+        console.log("Unknown status in getCurrentBlock ProductCatalog.jsx");
+        return (
+          <>
+            <h1 className={styles.center}>Данных нет</h1>
+            <p>Unknown status in ProductCatalog.jsx</p>
+          </>
+        );
     }
   };
 
   return (
     <>
-      <div className="content__items">{currentBlock()}</div>
+      <div className="content__items">{getCurrentBlock(status)}</div>
       {pageCount > 1 && (
         <ReactPaginate
           className={styles.pagination}

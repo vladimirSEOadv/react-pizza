@@ -1,25 +1,27 @@
 import React, { useEffect } from "react";
 import { Categories } from "../components/Categories/Categories";
 import { Sort } from "../components/Sort/Sort";
-import { useGetMyPizzas } from "../hooks/useGetMyPizzas";
+import { useGetMyPizzas } from "../hooks/useGetMyPizzas/useGetMyPizzas";
 import { ProductCatalog } from "../components/ProductCatalog/ProductCatalog";
+import { useSelector } from "react-redux";
 
 export const Home = () => {
-  const [pizzas, loading, error] = useGetMyPizzas();
+  const items = useSelector((state) => state.pizzas.items);
+  useGetMyPizzas();
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pizzas]);
+  }, [items]);
 
-  // TODO content__title displayed even if there are no pizzas to display after the filter. After adding the store, the problem will disappear.
   return (
     <div className="container">
       <div className="content__top">
         <Categories />
-        <Sort />
+        {!!items.length && <Sort />}
       </div>
-      <h2 className="content__title">Все пиццы</h2>
+      {!!items.length && <h2 className="content__title">Все пиццы</h2>}
       <div>
-        <ProductCatalog error={error} loading={loading} pizzas={pizzas} />
+        <ProductCatalog />
       </div>
     </div>
   );

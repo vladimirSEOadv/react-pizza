@@ -1,18 +1,18 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./Search.module.scss";
 import closeSvg from "../../assets/img/close-svg-icon.svg";
 import searchSvg from "../../assets/img/search-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  currentSearchValue,
-  setSearchValue,
-} from "../../redux/slices/filtersSlice";
+import { setSearchValue } from "../../redux/slices/filtersSlice";
 import debounce from "lodash.debounce";
 import { setItemOffset } from "../../redux/slices/paginationSlice";
 
 export const Search = () => {
-  const mySearchValue = useSelector(currentSearchValue);
-  const [localSearchValue, setLocalSearchValue] = useState(mySearchValue);
+  const stateSearchValue = useSelector((state) => state.filters.searchQuery);
+  const [localSearchValue, setLocalSearchValue] = useState(stateSearchValue);
+  useEffect(() => {
+    setLocalSearchValue(stateSearchValue);
+  }, [stateSearchValue]);
   const dispatch = useDispatch();
 
   const onclickHandler = () => {

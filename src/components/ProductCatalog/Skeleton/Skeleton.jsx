@@ -1,8 +1,12 @@
 import React from "react";
 import ContentLoader from "react-content-loader";
+import { useSelector } from "react-redux";
+import styles from "./Skeleton.module.scss";
 
-const Skeleton = ({ count }) => {
-  return [...new Array(count)].map((_, index) => {
+const Skeleton = () => {
+  const count = useSelector((state) => state.pagination.itemsPerPage);
+
+  const skeletonsContent = [...new Array(count)].map((_, index) => {
     return (
       <ContentLoader
         key={index}
@@ -22,6 +26,8 @@ const Skeleton = ({ count }) => {
       </ContentLoader>
     );
   });
+
+  return <div className={styles.skeletonWrapper}>{skeletonsContent}</div>;
 };
 
 export default Skeleton;

@@ -32,7 +32,8 @@ export const cartSlice = createSlice({
             variant.size === newVariant.size && variant.type === newVariant.type
         );
         if (isVariantExist === -1) {
-          state.items[newVariantId].variants.push({ ...newVariant, count: 1 });
+          newVariant.count = 1;
+          state.items[newVariantId].variants.push(newVariant);
         } else {
           state.items[newVariantId].variants[isVariantExist].count += 1;
         }

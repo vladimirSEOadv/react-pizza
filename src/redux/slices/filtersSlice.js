@@ -35,7 +35,6 @@ export const filtersSlice = createSlice({
   },
 });
 
-export const currentSearchValue = (state) => state.filters.searchQuery;
 export const sortIndex = (state) => state.filters.sortIndex;
 export const categoryIndex = (state) => state.filters.categoryIndex;
 
