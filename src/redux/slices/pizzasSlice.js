@@ -4,7 +4,8 @@ import axios from "axios";
 const initialState = {
   items: [],
   error: null,
-  status: "loading", // loading | success | error | empty data in response | no results after filtering
+  // loading | success | error | empty data in response | no results after filtering
+  status: "loading",
 };
 
 export const fetchPizzas = createAsyncThunk(
@@ -26,26 +27,30 @@ export const pizzasSlice = createSlice({
       state.status = action.payload;
     },
   },
-  extraReducers: {
-    // Todo заменить нотацию объявления на builder-callback-notation
-    // https://redux-toolkit.js.org/api/createReducer#usage-with-the-builder-callback-notation
-    [fetchPizzas.pending]: (state) => {
-      state.status = "loading";
-    },
-    [fetchPizzas.fulfilled]: (state, action) => {
-      state.items = action.payload;
-      if (action.payload.length === 0) {
-        state.status = "empty data in response";
-      } else {
-        state.status = "success";
-      }
-    },
-    [fetchPizzas.rejected]: (state, error) => {
-      state.items = [];
-      state.error = { name: error.error.name, message: error.error.message };
-      console.error("fetchPizzas rejected", error);
-      state.status = "error";
-    },
+  // extraReducers: {
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPizzas.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchPizzas.fulfilled, (state, action) => {
+        state.items = action.payload;
+        if (action.payload.length === 0) {
+          state.status = "empty data in response";
+        } else {
+          state.status = "success";
+        }
+      })
+      .addCase(fetchPizzas.rejected, (state, error) => {
+        state.items = [];
+        const { name, message } = error["error"];
+        state.error = {
+          name,
+          message,
+        };
+        console.error("fetchPizzas rejected", error);
+        state.status = "error";
+      });
   },
 });
 
