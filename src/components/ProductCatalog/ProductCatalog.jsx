@@ -10,21 +10,20 @@ import styles from "./ProductCatalog.module.scss";
 import { ErrorDisplayPanel } from "./ErrorDisplayPanel/ErrorDisplayPanel";
 import Skeleton from "./Skeleton/Skeleton";
 import { EmptySearchResult } from "./EmptySearchResult/EmptySearchResult";
-import { setStatus } from "../../redux/slices/pizzasSlice";
+import { filteredByCategory, setStatus } from "../../redux/slices/pizzasSlice";
 
 export function ProductCatalog() {
   const dispatch = useDispatch();
-  const { items: pizzas, status, error } = useSelector((state) => state.pizzas);
+  const { status, error } = useSelector((state) => state.pizzas);
 
   const currentCategory = useSelector((state) => state.filters.categoryIndex);
   const currentSearchQuery = useSelector((state) => state.filters.searchQuery);
 
   // Технически можно убрать, так как фильтрация вшита в запросы,
   // но бекенд mockapi.io не умеет применять query параметры по поисковому запросу и категории одновременно.
-  const pizzasFilteredByCategory =
-    currentCategory === 0
-      ? pizzas
-      : pizzas.filter((pizza) => pizza.category === currentCategory);
+  const pizzasFilteredByCategory = useSelector(
+    filteredByCategory(currentCategory)
+  );
 
   if (currentSearchQuery !== "" && pizzasFilteredByCategory.length === 0) {
     dispatch(setStatus("no results after filtering"));
@@ -44,7 +43,7 @@ export function ProductCatalog() {
     dispatch(setPageCount(newPageCount));
   }, [pizzasFilteredByCategory, itemsPerPage, dispatch]);
 
-  const handlePageClick = (event) => {
+  const handlePageChange = (event) => {
     const newOffset =
       (event.selected * itemsPerPage) % pizzasFilteredByCategory.length;
     dispatch(setItemOffset(newOffset));
@@ -84,7 +83,7 @@ export function ProductCatalog() {
           className={styles.pagination}
           breakLabel="..."
           nextLabel=" >"
-          onPageChange={handlePageClick}
+          onPageChange={handlePageChange}
           pageRangeDisplayed={2}
           pageCount={pageCount}
           previousLabel="< "

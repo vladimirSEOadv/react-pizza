@@ -31,6 +31,7 @@ export const pizzasSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPizzas.pending, (state) => {
+        state.error = null;
         state.status = "loading";
       })
       .addCase(fetchPizzas.fulfilled, (state, action) => {
@@ -42,6 +43,7 @@ export const pizzasSlice = createSlice({
         }
       })
       .addCase(fetchPizzas.rejected, (state, error) => {
+        state.status = "error";
         state.items = [];
         const { name, message } = error["error"];
         state.error = {
@@ -49,10 +51,17 @@ export const pizzasSlice = createSlice({
           message,
         };
         console.error("fetchPizzas rejected", error);
-        state.status = "error";
       });
   },
 });
+
+export const filteredByCategory = (category) => (state) => {
+  if (category === 0) {
+    return state.pizzas.items;
+  } else {
+    return state.pizzas.items.filter((pizza) => pizza.category === category);
+  }
+};
 
 export const { setItems, setStatus } = pizzasSlice.actions;
 
