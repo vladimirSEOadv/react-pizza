@@ -4,10 +4,24 @@ import { Sort } from "../components/Sort/Sort";
 import { useGetMyPizzas } from "../hooks/useGetMyPizzas/useGetMyPizzas";
 import { ProductCatalog } from "../components/ProductCatalog/ProductCatalog";
 import { useSelector } from "react-redux";
+import { usePushParamsToUrl } from "../hooks/useGetMyPizzas/usePushParamsToUrl";
+import { useCreateStrSParamsToAxios } from "../hooks/useGetMyPizzas/useCreateStrSParamsToAxios";
 
 export const Home = () => {
   const items = useSelector((state) => state.pizzas.items);
-  useGetMyPizzas();
+  const { sortIndex, categoryIndex, searchQuery } = useSelector(
+    (state) => state.filters
+  );
+
+  usePushParamsToUrl(sortIndex, categoryIndex, searchQuery);
+
+  const urlParams = useCreateStrSParamsToAxios(
+    sortIndex,
+    categoryIndex,
+    searchQuery
+  );
+
+  useGetMyPizzas(urlParams);
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 import { BaseUrl } from "../../constants/baseUrl";
-import { useCreateUrlParams } from "./useCreateUrlParams";
 import { fetchPizzas } from "../../redux/slices/pizzasSlice";
 import { useDispatch } from "react-redux";
 
-export const useGetMyPizzas = () => {
+export const useGetMyPizzas = (urlParams) => {
   const dispatch = useDispatch();
-
-  const urlParams = useCreateUrlParams();
 
   useEffect(() => {
     try {
