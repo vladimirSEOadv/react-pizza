@@ -10,7 +10,7 @@ export const CartInfo = () => {
   const currentCountInCart = useSelector(numberOfItemsInCart);
   return (
     <div>
-      <Link to={"/cart"} className="button button--cart">
+      <Link to={"/cart"} className="button button--cart" draggable="false">
         <span>{currentTotalPrice} ₴</span>
         <div className="button__delimiter" />
         <img src={basketIcon} alt="basket" />

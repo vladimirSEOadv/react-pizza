@@ -4,7 +4,7 @@ import React from "react";
 
 export const LogoSection = () => {
   return (
-    <Link to={"/"}>
+    <Link to={"/"} draggable="false">
       <div className="header__logo">
         <img width="38" src={logo} alt="Pizza logo" />
         <div className="header__logo__title">

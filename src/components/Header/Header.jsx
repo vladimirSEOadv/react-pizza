@@ -6,16 +6,25 @@ import { useLocation } from "react-router-dom";
 
 export const Header = () => {
   const location = useLocation();
+
+  const getCurrentElement = () => {
+    if (location.pathname.includes("/pizza/")) {
+      return <CartInfo />;
+    } else if (location.pathname !== "/cart") {
+      return (
+        <>
+          <Search />
+          <CartInfo />
+        </>
+      );
+    }
+  };
+
   return (
     <div className="header">
       <div className="container">
         <LogoSection />
-        {location.pathname !== "/cart" && (
-          <>
-            <Search />
-            <CartInfo />
-          </>
-        )}
+        {getCurrentElement()}
       </div>
     </div>
   );

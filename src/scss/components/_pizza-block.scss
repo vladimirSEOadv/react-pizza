@@ -8,6 +8,15 @@
   margin-bottom: 65px;
   margin-right: 45px;
 
+  .pizza-block-wrapper {
+    cursor: pointer;
+  }
+
+  .pizza-block-wrapper:hover .pizza-block__title {
+    color: #fe5f1e;
+  }
+
+
   @media (max-width: 1199px) {
     max-width: 50%;
   }

@@ -4,6 +4,7 @@ import { addItem } from "../../../redux/slices/cartSlice";
 import { typesOfDough } from "../../../constants/typesOfDough";
 import { svgButtonAddToCart } from "./svgButtonAddToCart";
 import { calculatePrice } from "./calculatePrice";
+import { useNavigate } from "react-router-dom";
 
 const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
   const dispatch = useDispatch();
@@ -75,11 +76,23 @@ const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
       };
     });
   }
-
+  const navigate = useNavigate();
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={imageUrl} alt={name} />
-      <h4 className="pizza-block__title">{name}</h4>
+      <div
+        className="pizza-block-wrapper"
+        onClick={() => {
+          navigate(`/pizza/${id}`);
+        }}
+      >
+        <img
+          className="pizza-block__image"
+          src={imageUrl}
+          alt={name}
+          draggable="false"
+        />
+        <h4 className="pizza-block__title">{name}</h4>
+      </div>
       <div className="pizza-block__selector">
         <ul>
           {types.map((typeId) => {

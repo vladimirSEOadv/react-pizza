@@ -40,16 +40,22 @@ export const Search = () => {
   };
 
   return (
-    <div className={styles.root}>
-      <div className={styles.searchWidthContainer}>
+    <div className={styles.search}>
+      <div className={styles.search__container}>
         <label htmlFor="search-input">
-          <img className={styles.search} src={searchSvg} alt="search" />
+          <img
+            className={styles.search__container__icon}
+            src={searchSvg}
+            alt="search"
+            draggable="false"
+          />
           {localSearchValue && (
             <img
-              className={styles.closeSvg}
+              className={styles.search__container__closeSvg}
               src={closeSvg}
               onClick={onclickHandler}
               alt="close"
+              draggable="false"
             />
           )}
         </label>
@@ -57,7 +63,7 @@ export const Search = () => {
           value={localSearchValue}
           onChange={inputHandler}
           id="search-input"
-          className={styles.input}
+          className={styles.search__container__input}
           placeholder="Поиск пиццы"
           type="text"
         />
