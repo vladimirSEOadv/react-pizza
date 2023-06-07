@@ -1,6 +1,6 @@
 import React from "react";
-import { setSearchValue } from "../../../redux/slices/filtersSlice";
-import { setItemOffset } from "../../../redux/slices/paginationSlice";
+import { setSearchValue } from "../../../../redux/slices/filtersSlice";
+import { setItemOffset } from "../../../../redux/slices/paginationSlice";
 import { useDispatch } from "react-redux";
 import styles from "./EmptySearchResult.module.scss";
 

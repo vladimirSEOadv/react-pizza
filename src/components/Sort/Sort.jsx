@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SortSvg from "./SortSvg";
+import SortSvg from "./components/SortSvg";
 import { useDispatch, useSelector } from "react-redux";
 import { setSortIndex, sortIndex } from "../../redux/slices/filtersSlice";
 import { sortValues } from "../../constants/sortValues";

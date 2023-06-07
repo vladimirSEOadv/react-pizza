@@ -1,8 +1,8 @@
 import React from "react";
-import { svgCrossOnDeleteButton } from "./svgCrossOnDeleteButton";
+import { svgCrossOnDeleteButton } from "./assets/svgCrossOnDeleteButton";
 import { useDispatch } from "react-redux";
 import { deleteItemInCart } from "../../redux/slices/cartSlice";
-import { CartItemCounter } from "./CartItemCounter";
+import { CartItemCounter } from "./components/CartItemCounter/CartItemCounter";
 
 export const CartItem = ({ id, name, price, count, size, type, imageUrl }) => {
   const dispatch = useDispatch();

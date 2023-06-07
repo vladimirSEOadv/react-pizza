@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { CATEGORIES } from "../constants/categories";
-import styles from "./FullPizza.module.scss";
+import { CATEGORIES } from "../../constants/categories";
+import styles from "./SinglePizza.module.scss";
 
-export const FullPizza = () => {
+export const SinglePizza = () => {
   const [pizza, setPizza] = useState({});
   const { id } = useParams();
 

@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import backSvg from "../../assets/img/go-back.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { CartItem } from "../../components/CartItem/CartItem";
-import { SvgCartClear } from "./SvgCartClear";
-import { SvgCartIcon } from "./SvgCartIcon";
+import { SvgCartClear } from "./assets/SvgCartClear";
+import { SvgCartIcon } from "./assets/SvgCartIcon";
 import {
   cartItems,
   clearCart,
   numberOfItemsInCart,
   totalPrice,
 } from "../../redux/slices/cartSlice";
-import { EmptyCart } from "../../components/CartItem/EmptyCart";
+import { EmptyCart } from "../../components/CartItem/components/EmptyCart/EmptyCart";
 
 export const Cart = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import basketIcon from "../../assets/img/backet.svg";
+import basketIcon from "../../../../assets/img/backet.svg";
 import { useSelector } from "react-redux";
-import { numberOfItemsInCart, totalPrice } from "../../redux/slices/cartSlice";
+import {
+  numberOfItemsInCart,
+  totalPrice,
+} from "../../../../redux/slices/cartSlice";
 import styles from "./CartInfo.module.css";
 
 export const CartInfo = () => {

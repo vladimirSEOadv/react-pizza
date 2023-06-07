@@ -1,7 +1,7 @@
 import React from "react";
-import { svgDecrementQuantityOfGoods } from "./svgDecrementQuantityOfGoods";
-import { svgIncrementQuantityOfGoods } from "./svgIncrementQuantityOfGoods";
-import { changeCountOfItemInCart } from "../../redux/slices/cartSlice";
+import { svgDecrementQuantityOfGoods } from "../../assets/svgDecrementQuantityOfGoods";
+import { svgIncrementQuantityOfGoods } from "../../assets/svgIncrementQuantityOfGoods";
+import { changeCountOfItemInCart } from "../../../../redux/slices/cartSlice";
 import { useDispatch } from "react-redux";
 
 export const CartItemCounter = ({ id, size, type, count }) => {

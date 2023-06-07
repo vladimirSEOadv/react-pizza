@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
-import PizzaBlock from "./PizzaBlock/PizzaBlock";
+import PizzaBlock from "./components/PizzaBlock/PizzaBlock";
 import {
   setItemOffset,
   setPageCount,
 } from "../../redux/slices/paginationSlice";
 import styles from "./ProductCatalog.module.scss";
-import { ErrorDisplayPanel } from "./ErrorDisplayPanel/ErrorDisplayPanel";
-import Skeleton from "./Skeleton/Skeleton";
-import { EmptySearchResult } from "./EmptySearchResult/EmptySearchResult";
+import { ErrorDisplayPanel } from "./components/ErrorDisplayPanel/ErrorDisplayPanel";
+import Skeleton from "./components/Skeleton/Skeleton";
+import { EmptySearchResult } from "./components/EmptySearchResult/EmptySearchResult";
 import { filteredByCategory, setStatus } from "../../redux/slices/pizzasSlice";
 
 export function ProductCatalog() {

@@ -1,7 +1,7 @@
 import React from "react";
-import { LogoSection } from "./LogoSection";
+import { LogoSection } from "./components/LogoSection/LogoSection";
 import { Search } from "../Search/Search";
-import { CartInfo } from "./CartInfo";
+import { CartInfo } from "./components/CartInfo/CartInfo";
 import { useLocation } from "react-router-dom";
 
 export const Header = () => {
