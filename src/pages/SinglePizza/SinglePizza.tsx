@@ -4,17 +4,30 @@ import axios from "axios";
 import { CATEGORIES } from "../../constants/categories";
 import styles from "./SinglePizza.module.scss";
 
-export const SinglePizza = () => {
-  const [pizza, setPizza] = useState({});
-  const { id } = useParams();
+interface PizzaItem {
+  id: number;
+  imageUrl: string;
+  name: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+  category: number;
+  rating: number;
+}
 
-  async function getPizzaById(id) {
+export const SinglePizza: React.FC = () => {
+  const [pizza, setPizza] = useState<PizzaItem | null>(null);
+  const { id } = useParams<{ id: string }>();
+
+  async function getPizzaById(id: string) {
     try {
       const res = await axios.get(
         `https://6436dc673e4d2b4a12dda417.mockapi.io/items?id=${id}`
       );
       const { data } = res;
-      setPizza(...data);
+      if (data) {
+        setPizza(data[0]);
+      }
     } catch (error) {
       const { message, name, code } = error;
       console.log(
@@ -26,23 +39,34 @@ export const SinglePizza = () => {
   useEffect(() => {
     getPizzaById(id);
   }, [id]);
+  if (pizza === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container">
       <div className={styles.wrapper}>
-        <div className={styles.pizza}>
-          {Object.keys(pizza).length && (
+        <div>
+          {Object.keys(pizza).length > 0 && (
             <div>
-              <div>{CATEGORIES[pizza?.category]}</div>
+              <div>
+                {
+                  CATEGORIES[
+                    "category" in pizza
+                      ? pizza.category
+                      : "категория не определена"
+                  ]
+                }
+              </div>
               <img
                 style={{ width: "300px" }}
-                src={pizza?.imageUrl}
+                src={pizza.imageUrl}
                 alt=""
                 draggable="false"
               />
-              <h2>{pizza?.name}</h2>
-              <div>Цена {pizza?.price}</div>
-              <div>Рейтинг: {pizza?.rating}</div>
+              <h2>{pizza.name}</h2>
+              <div>Цена {pizza.price}</div>
+              <div>Рейтинг: {pizza.rating}</div>
               {/*<div>{pizza?.sizes}</div>*/}
               {/*<div>{pizza?.types}</div>*/}
               <button>Заказать</button>
