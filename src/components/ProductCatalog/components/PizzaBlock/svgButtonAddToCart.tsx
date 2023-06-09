@@ -1,6 +1,6 @@
 import React from "react";
 
-export const svgButtonAddToCart = (
+export const svgButtonAddToCart: React.SVGProps<SVGSVGElement> = (
   <svg
     width="12"
     height="12"
