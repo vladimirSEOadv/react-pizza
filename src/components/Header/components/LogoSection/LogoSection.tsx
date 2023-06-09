@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../../../../assets/img/pizza-logo.svg";
 import React from "react";
 
-export const LogoSection = () => {
+export const LogoSection: React.FC = () => {
   return (
     <Link to={"/"} draggable="false">
       <div className="header__logo">

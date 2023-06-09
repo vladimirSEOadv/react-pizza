@@ -4,7 +4,7 @@ import { Search } from "../Search/Search";
 import { CartInfo } from "./components/CartInfo/CartInfo";
 import { useLocation } from "react-router-dom";
 
-export const Header = () => {
+export const Header: React.FC = () => {
   const location = useLocation();
 
   const getCurrentElement = () => {
