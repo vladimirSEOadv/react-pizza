@@ -4,7 +4,7 @@ import { setItemOffset } from "../../../../redux/slices/paginationSlice";
 import { useDispatch } from "react-redux";
 import styles from "./EmptySearchResult.module.scss";
 
-export const EmptySearchResult = () => {
+export const EmptySearchResult: React.FC = () => {
   const dispatch = useDispatch();
   return (
     <>
