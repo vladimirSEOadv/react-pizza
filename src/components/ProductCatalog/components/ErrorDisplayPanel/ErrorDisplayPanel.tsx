@@ -1,7 +1,15 @@
 import React from "react";
 import styles from "./ErrorDisplayPanel.module.scss";
 
-export const ErrorDisplayPanel = (props) => {
+interface ErrorDisplayPanelProps {
+  error: {
+    message: string;
+    name: string;
+  };
+}
+
+export const ErrorDisplayPanel: React.FC<ErrorDisplayPanelProps> = (props) => {
+  console.log("props", props);
   const { message, name } = props.error;
   return (
     <div className={styles.errorDisplayPanel}>
