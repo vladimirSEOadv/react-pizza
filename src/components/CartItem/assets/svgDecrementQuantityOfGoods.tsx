@@ -1,8 +1,8 @@
 import React from "react";
 
-export const svgCrossOnDeleteButton = (
+export const svgDecrementQuantityOfGoods: React.JSX.Element = (
   <svg
-    className="cross-on-delete-button remove"
+    className="minus"
     width="10"
     height="10"
     viewBox="0 0 10 10"
