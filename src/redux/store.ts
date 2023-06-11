@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, Store } from "@reduxjs/toolkit";
 import filters from "./slices/filtersSlice";
 import pagination from "./slices/paginationSlice";
 import cart from "./slices/cartSlice";
 import pizzas from "./slices/pizzasSlice";
 
-export const store = configureStore({
+const store: Store = configureStore({
   reducer: {
     filters,
     pagination,
@@ -12,3 +12,8 @@ export const store = configureStore({
     pizzas,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type RootDispatch = typeof store.dispatch;
+
+export default store;
