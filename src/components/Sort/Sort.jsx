@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import SortSvg from "./components/SortSvg";
 import { useDispatch, useSelector } from "react-redux";
-import { setSortIndex, sortIndex } from "../../redux/slices/filtersSlice";
+import { selectSortIndex, setSortIndex } from "../../redux/slices/filtersSlice";
 import { sortValues } from "../../constants/sortValues";
 import { setItemOffset } from "../../redux/slices/paginationSlice";
 
 export const Sort = () => {
   const dispatch = useDispatch();
-  const currentSortIndex = useSelector(sortIndex);
+  const currentSortIndex = useSelector(selectSortIndex);
   const sortVariants = sortValues.map((obj) => obj.name);
   const [open, setOpen] = useState(false);
   return (
