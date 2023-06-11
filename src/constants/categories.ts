@@ -1,4 +1,6 @@
-export const CATEGORIES: string[] = [
+type categoriesTypes = string[];
+
+export const CATEGORIES: categoriesTypes = [
   "Все",
   "Мясные",
   "Вегетарианские",

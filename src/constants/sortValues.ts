@@ -1,4 +1,13 @@
-export const sortValues = [
+export type OneSortValueTypes = {
+  name: string;
+  orderBy: string;
+  order: string;
+  id: number;
+};
+
+export type SortValuesTypes = OneSortValueTypes[];
+
+export const sortValues: SortValuesTypes = [
   {
     name: "популярности (По возрастанию)",
     orderBy: "rating",
