@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import backSvg from "../../assets/img/go-back.svg";
-import { useDispatch, useSelector } from "react-redux";
 import { CartItem } from "../../components/CartItem/CartItem";
 import { SvgCartClear } from "./assets/SvgCartClear";
 import { SvgCartIcon } from "./assets/SvgCartIcon";
@@ -12,34 +11,63 @@ import {
   totalPrice,
 } from "../../redux/slices/cartSlice";
 import { EmptyCart } from "../../components/CartItem/components/EmptyCart/EmptyCart";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 
-export const Cart = () => {
-  const dispatch = useDispatch();
-  const price = useSelector(totalPrice);
-  const items = useSelector(cartItems);
-  const itemCount = useSelector(numberOfItemsInCart);
+type cartVariantType = {
+  size: number;
+  type: string;
+  price: number;
+  count: number;
+};
+
+type cartItemTypes = {
+  name: string;
+  imageUrl: string;
+  variants: cartVariantType[];
+};
+
+type cartPizzaType = {
+  id: string;
+  name: string;
+  imageUrl: string;
+  size: number;
+  type: string;
+  price: number;
+  count: number;
+};
+
+export const Cart: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const price = useAppSelector(totalPrice);
+  const items = useAppSelector<Record<string, cartItemTypes>>(cartItems);
+  const itemCount = useAppSelector(numberOfItemsInCart);
 
   const clearCartHandler = () => {
     dispatch(clearCart());
   };
 
-  const makeArrOfPizza = (cart) => {
+  const makeArrOfPizza = (
+    cart: Record<string, cartItemTypes>
+  ): cartPizzaType[] => {
     if (Object.keys(cart).length === 0) {
       return [];
     } else {
       const result = [];
       for (let pizzaId in cart) {
-        const { name, imageUrl } = cart[pizzaId];
-        for (let variant of cart[pizzaId].variants) {
-          result.push({
-            id: pizzaId,
-            name,
-            imageUrl,
-            size: variant.size,
-            type: variant.type,
-            price: variant.price * variant.count,
-            count: variant.count,
-          });
+        const cartItem = cart[pizzaId];
+        if (typeof cartItem !== "undefined") {
+          const { name, imageUrl } = cartItem;
+          for (let variant of cartItem.variants) {
+            result.push({
+              id: pizzaId,
+              name,
+              imageUrl,
+              size: variant.size,
+              type: variant.type,
+              price: variant.price * variant.count,
+              count: variant.count,
+            });
+          }
         }
       }
       return result;

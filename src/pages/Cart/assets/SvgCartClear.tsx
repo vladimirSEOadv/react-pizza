@@ -1,6 +1,6 @@
 import React from "react";
 
-export const SvgCartClear = (
+export const SvgCartClear: React.ReactNode = (
   <svg
     width="20"
     height="20"

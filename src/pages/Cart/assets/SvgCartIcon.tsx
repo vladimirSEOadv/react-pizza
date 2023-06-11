@@ -1,6 +1,6 @@
 import React from "react";
 
-export const SvgCartIcon = (
+export const SvgCartIcon: React.ReactNode = (
   <svg
     width="18"
     height="18"
