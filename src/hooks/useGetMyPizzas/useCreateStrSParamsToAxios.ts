@@ -1,10 +1,10 @@
 import { sortValues } from "../../constants/sortValues";
 
 export const useCreateStrSParamsToAxios = (
-  sortIndex,
-  categoryIndex,
-  searchQuery
-) => {
+  sortIndex: number,
+  categoryIndex: number | string,
+  searchQuery: string
+): string => {
   const category = `category=${categoryIndex || "*"}`;
   const search = `&search=${searchQuery}`;
   const currentOrderBy = `&orderBy=${sortValues[sortIndex].orderBy}`;
