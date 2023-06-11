@@ -3,7 +3,11 @@ import { useEffect, useRef } from "react";
 import qs from "qs";
 import { sortValues } from "../../constants/sortValues";
 
-export const usePushParamsToUrl = (sortIndex, categoryIndex, searchQuery) => {
+export const usePushParamsToUrl = (
+  sortIndex: number,
+  categoryIndex: number,
+  searchQuery: string | undefined
+) => {
   const navigate = useNavigate();
   const isMounted = useRef(false);
 
