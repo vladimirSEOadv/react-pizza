@@ -1,15 +1,23 @@
 import React from "react";
 import ContentLoader from "react-content-loader";
-import { useSelector } from "react-redux";
 import styles from "./Skeleton.module.scss";
+import { RootState } from "../../../../redux/store";
+import { useAppSelector } from "../../../../redux/hooks/hooks";
 
+// TODO добавить типы для state.pagination.itemsPerPage
 const Skeleton = () => {
-  const count = useSelector((state) => state.pagination.itemsPerPage);
+  const count = useAppSelector(
+    (state: RootState) => state.pagination.itemsPerPage
+  );
+
+  const createArrOfId = (count: number): Array<number> =>
+    count ? [...new Array(count)] : [0];
+  const arrOfId = createArrOfId(count);
 
   const skeletonsContent = [...new Array(count)].map((_, index) => {
     return (
       <ContentLoader
-        key={index}
+        key={arrOfId[index]}
         className="pizza-block"
         speed={1}
         width={366}

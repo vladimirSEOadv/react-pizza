@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import ReactPaginate from "react-paginate";
-import { useDispatch, useSelector } from "react-redux";
 import PizzaBlock from "./components/PizzaBlock/PizzaBlock";
 import {
   setItemOffset,
@@ -11,17 +10,22 @@ import { ErrorDisplayPanel } from "./components/ErrorDisplayPanel/ErrorDisplayPa
 import Skeleton from "./components/Skeleton/Skeleton";
 import { EmptySearchResult } from "./components/EmptySearchResult/EmptySearchResult";
 import { filteredByCategory, setStatus } from "../../redux/slices/pizzasSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 
 export function ProductCatalog() {
-  const dispatch = useDispatch();
-  const { status, error } = useSelector((state) => state.pizzas);
+  const dispatch = useAppDispatch();
+  const { status, error } = useAppSelector((state) => state.pizzas);
 
-  const currentCategory = useSelector((state) => state.filters.categoryIndex);
-  const currentSearchQuery = useSelector((state) => state.filters.searchQuery);
+  const currentCategory = useAppSelector(
+    (state) => state.filters.categoryIndex
+  );
+  const currentSearchQuery = useAppSelector(
+    (state) => state.filters.searchQuery
+  );
 
   // Технически можно убрать, так как фильтрация вшита в запросы,
   // но бекенд mockapi.io не умеет применять query параметры по поисковому запросу и категории одновременно.
-  const pizzasFilteredByCategory = useSelector(
+  const pizzasFilteredByCategory = useAppSelector(
     filteredByCategory(currentCategory)
   );
 
@@ -29,7 +33,7 @@ export function ProductCatalog() {
     dispatch(setStatus("no results after filtering"));
   }
 
-  const { itemsPerPage, pageCount, itemOffset } = useSelector(
+  const { itemsPerPage, pageCount, itemOffset } = useAppSelector(
     (state) => state.pagination
   );
 
@@ -43,14 +47,14 @@ export function ProductCatalog() {
     dispatch(setPageCount(newPageCount));
   }, [pizzasFilteredByCategory, itemsPerPage, dispatch]);
 
-  const handlePageChange = (event) => {
+  const handlePageChange = ({ selected }: { selected: number }) => {
     const newOffset =
-      (event.selected * itemsPerPage) % pizzasFilteredByCategory.length;
+      (selected * itemsPerPage) % pizzasFilteredByCategory.length;
     dispatch(setItemOffset(newOffset));
     window.scrollTo(0, 0);
   };
 
-  const getCurrentBlock = (status) => {
+  const getCurrentBlock = (status: string) => {
     switch (status) {
       case "error":
         return <ErrorDisplayPanel error={error} />;

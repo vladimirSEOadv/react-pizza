@@ -1,11 +1,11 @@
 import React from "react";
 import { setSearchValue } from "../../../../redux/slices/filtersSlice";
 import { setItemOffset } from "../../../../redux/slices/paginationSlice";
-import { useDispatch } from "react-redux";
 import styles from "./EmptySearchResult.module.scss";
+import { useAppDispatch } from "../../../../redux/hooks/hooks";
 
 export const EmptySearchResult: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <>
       <div className={styles.wrapper}>

@@ -1,27 +1,51 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../../../redux/slices/cartSlice";
+import {
+  AddedToCartVariantTypes,
+  addItem,
+  CartVariant,
+} from "../../../../redux/slices/cartSlice";
 import { typesOfDough } from "../../../../constants/typesOfDough";
 import { svgButtonAddToCart } from "./svgButtonAddToCart";
-import { calculatePrice } from "./calculatePrice";
+import { calculatePrice, calculatePriceTypes } from "./calculatePrice";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks/hooks";
+import { Pizza } from "../../../../redux/slices/pizzasSlice";
 
-const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
-  const dispatch = useDispatch();
+type PizzaBlockProps = Pick<
+  Pizza,
+  "id" | "name" | "imageUrl" | "types" | "sizes" | "price"
+>;
 
-  const pizzaCount = useSelector((state) => {
-    const idIsExistInCart = state.cart.items?.[id];
-    if (idIsExistInCart) {
-      return state.cart.items?.[id].variants.reduce((acc, variant) => {
-        acc += variant.count;
-        return acc;
-      }, 0);
-    } else {
-      return 0;
-    }
-  });
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id,
+  name,
+  imageUrl,
+  types,
+  sizes,
+  price,
+}) => {
+  const dispatch = useAppDispatch();
 
-  const initialState = {
+  function useGetPizzaCount(id: number) {
+    return useAppSelector((state) => {
+      const idIsExistInCart = state.cart.items?.[id];
+      if (idIsExistInCart) {
+        return state.cart.items?.[id].variants.reduce(
+          (acc: number, variant: CartVariant): number => {
+            acc += variant.count;
+            return acc;
+          },
+          0
+        );
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  const pizzaCount = useGetPizzaCount(id);
+
+  const initialState: AddedToCartVariantTypes = {
     size: sizes[0],
     type: typesOfDough[types[0]],
     price: calculatePrice({
@@ -29,12 +53,12 @@ const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
       currentSize: sizes[0],
       basePrice: price,
       sizes,
-    }),
+    } as calculatePriceTypes),
   };
 
   const [currentVariant, setCurrentVariant] = useState(initialState);
 
-  function addToCartHandler(addedVariant) {
+  function addToCartHandler(addedVariant: AddedToCartVariantTypes) {
     dispatch(
       addItem({
         id,
@@ -45,14 +69,14 @@ const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
     );
   }
 
-  function pickTypeHandler(newType, basePrice) {
+  function pickTypeHandler(newType: string, basePrice: number) {
     setCurrentVariant((oldVariant) => {
       const newPrice = calculatePrice({
         currentType: newType,
         currentSize: oldVariant.size,
         basePrice,
         sizes,
-      });
+      } as calculatePriceTypes);
       return {
         ...oldVariant,
         type: newType,
@@ -61,14 +85,14 @@ const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
     });
   }
 
-  function pickSizeHandler(newSize, basePrice) {
+  function pickSizeHandler(newSize: number, basePrice: number) {
     setCurrentVariant((oldVariant) => {
       const newPrice = calculatePrice({
         currentType: oldVariant.type,
         currentSize: newSize,
         basePrice,
         sizes,
-      });
+      } as calculatePriceTypes);
       return {
         ...oldVariant,
         size: newSize,
@@ -76,6 +100,7 @@ const PizzaBlock = ({ name, imageUrl, types, sizes, price, id }) => {
       };
     });
   }
+
   const navigate = useNavigate();
   return (
     <div className="pizza-block">

@@ -1,4 +1,11 @@
-export const calculatePrice = (obj) => {
+export type calculatePriceTypes = {
+  currentType: string;
+  currentSize: number;
+  basePrice: number;
+  sizes: Array<number>;
+};
+
+export const calculatePrice = (obj: calculatePriceTypes): number => {
   const { currentType, currentSize, basePrice, sizes } = obj;
   let newPrice = basePrice;
   if (currentType === "традиционное") {
