@@ -1,12 +1,12 @@
 import React from "react";
 import { CATEGORIES } from "../../constants/categories";
 import { setCategoryIndex } from "../../redux/slices/filtersSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { setItemOffset } from "../../redux/slices/paginationSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 
 export const Categories = () => {
-  const dispatch = useDispatch();
-  const { categoryIndex } = useSelector((state) => state.filters);
+  const dispatch = useAppDispatch();
+  const { categoryIndex } = useAppSelector((state) => state.filters);
   return (
     <div className="categories">
       <ul>
