@@ -3,12 +3,14 @@ import { BaseUrl } from "../../constants/baseUrl";
 import { fetchPizzas } from "../../redux/slices/pizzasSlice";
 import { useDispatch } from "react-redux";
 
-export const useGetMyPizzas = (urlParams) => {
-  const dispatch = useDispatch();
+// Todo попробовать заменить any на более конкретный тип
+export const useGetMyPizzas = (urlParams: string) => {
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
     try {
-      dispatch(fetchPizzas(BaseUrl + urlParams));
+      const url = `${BaseUrl}${urlParams}`;
+      dispatch(fetchPizzas(url));
     } catch (error) {
       console.log("error in useGetMyPizzas hook", error);
     }
