@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import basketIcon from "../../../../assets/img/backet.svg";
-import { useSelector } from "react-redux";
 import {
   numberOfItemsInCart,
   totalPrice,
 } from "../../../../redux/slices/cartSlice";
 import styles from "./CartInfo.module.css";
+import { useAppSelector } from "../../../../redux/hooks/hooks";
 
-export const CartInfo = () => {
-  const currentTotalPrice = useSelector(totalPrice);
-  const currentCountInCart = useSelector(numberOfItemsInCart);
+export const CartInfo: React.FC = () => {
+  const currentTotalPrice = useAppSelector(totalPrice);
+  const currentCountInCart = useAppSelector(numberOfItemsInCart);
   return (
     <div>
       <Link to={"/cart"} className="button button--cart" draggable="false">
