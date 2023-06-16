@@ -3,13 +3,13 @@ import { Categories } from "../../components/Categories/Categories";
 import { Sort } from "../../components/Sort/Sort";
 import { useGetMyPizzas } from "../../hooks/useGetMyPizzas/useGetMyPizzas";
 import { ProductCatalog } from "../../components/ProductCatalog/ProductCatalog";
-import { useSelector } from "react-redux";
 import { usePushParamsToUrl } from "../../hooks/useGetMyPizzas/usePushParamsToUrl";
 import { useCreateStrSParamsToAxios } from "../../hooks/useGetMyPizzas/useCreateStrSParamsToAxios";
+import { useAppSelector } from "../../redux/hooks/hooks";
 
 export const HomePage = () => {
-  const items = useSelector((state) => state.pizzas.items);
-  const { sortIndex, categoryIndex, searchQuery } = useSelector(
+  const items = useAppSelector((state) => state.pizzas.items);
+  const { sortIndex, categoryIndex, searchQuery } = useAppSelector(
     (state) => state.filters
   );
 
