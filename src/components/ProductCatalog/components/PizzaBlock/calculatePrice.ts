@@ -14,7 +14,7 @@ export const calculatePrice = (obj: calculatePriceTypes): number => {
   if (currentSize !== sizes[0]) {
     const costOfOneCentimeter = basePrice / sizes[0];
     const difference = currentSize - sizes[0];
-    newPrice += Math.round(costOfOneCentimeter * difference);
+    newPrice += costOfOneCentimeter * difference;
   }
-  return newPrice;
+  return Math.round(newPrice);
 };
