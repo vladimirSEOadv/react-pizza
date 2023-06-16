@@ -1,13 +1,31 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import { svgCrossOnDeleteButton } from "./assets/svgCrossOnDeleteButton";
-import { useDispatch } from "react-redux";
 import { deleteItemInCart } from "../../redux/slices/cartSlice";
 import { CartItemCounter } from "./components/CartItemCounter/CartItemCounter";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 
-export const CartItem = ({ id, name, price, count, size, type, imageUrl }) => {
-  const dispatch = useDispatch();
+type CartItemTypes = {
+  id: string;
+  name: string;
+  price: number;
+  count: number;
+  size: number;
+  type: string;
+  imageUrl: string;
+};
 
-  function removeItemOfCart(e) {
+export const CartItem = ({
+  id,
+  name,
+  price,
+  count,
+  size,
+  type,
+  imageUrl,
+}: CartItemTypes) => {
+  const dispatch = useAppDispatch();
+
+  function removeItemOfCart(e: MouseEvent) {
     if (e.currentTarget.classList.contains("remove")) {
       dispatch(deleteItemInCart({ id, size, type }));
     }

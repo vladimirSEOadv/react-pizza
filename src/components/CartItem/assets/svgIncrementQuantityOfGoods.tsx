@@ -1,6 +1,6 @@
 import React from "react";
 
-export const svgIncrementQuantityOfGoods: React.JSX.Element = (
+export const svgIncrementQuantityOfGoods: React.ReactNode = (
   <svg
     className="plus"
     width="10"

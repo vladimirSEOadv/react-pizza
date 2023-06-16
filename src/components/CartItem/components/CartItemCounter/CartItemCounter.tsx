@@ -2,31 +2,48 @@ import React from "react";
 import { svgDecrementQuantityOfGoods } from "../../assets/svgDecrementQuantityOfGoods";
 import { svgIncrementQuantityOfGoods } from "../../assets/svgIncrementQuantityOfGoods";
 import { changeCountOfItemInCart } from "../../../../redux/slices/cartSlice";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../../redux/hooks/hooks";
 
-export const CartItemCounter = ({ id, size, type, count }) => {
-  const dispatch = useDispatch();
+interface CartItemCounterProps {
+  id: string;
+  size: number;
+  type: string;
+  count: number;
+}
+
+export const CartItemCounter: React.FC<CartItemCounterProps> = ({
+  id,
+  size,
+  type,
+  count,
+}) => {
+  const dispatch = useAppDispatch();
+
   function incrementItemOfCart() {
-    dispatch(
-      changeCountOfItemInCart({
-        id,
-        size,
-        type,
-        changeType: "increment",
-      })
-    );
+    const objChanges = {
+      id,
+      size,
+      type,
+      changeType: "increment",
+    };
+
+    dispatch(changeCountOfItemInCart(objChanges));
   }
 
   function decrementItemOfCart() {
-    if (count === 1) return;
-    dispatch(
-      changeCountOfItemInCart({ id, size, type, changeType: "decrement" })
-    );
+    const objChanges = {
+      id,
+      size,
+      type,
+      changeType: "decrement",
+    };
+    dispatch(changeCountOfItemInCart(objChanges));
   }
 
   return (
     <div className="cart__item-count">
       <button
+        disabled={count === 1}
         className="button button--outline button--circle cart__item-count-minus minus"
         onClick={decrementItemOfCart}
       >
