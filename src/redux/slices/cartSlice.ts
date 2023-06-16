@@ -1,6 +1,51 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
-const initialState = {
+export interface CartVariant {
+  size: number;
+  type: string;
+  count: number;
+  price: number;
+}
+
+interface CartItem {
+  name: string;
+  imageUrl: string;
+  variants: CartVariant[];
+}
+
+interface CartState {
+  items: { [key: string]: CartItem };
+  totalPrice: number;
+  itemsCountInCart: number;
+}
+
+export type AddedToCartVariantTypes = Pick<
+  CartVariant,
+  "size" | "type" | "price"
+>;
+
+export interface AddItemPayload {
+  id: number;
+  name: string;
+  imageUrl: string;
+  variant: AddedToCartVariantTypes;
+}
+
+interface DeleteItemPayload {
+  id: string;
+  size: number;
+  type: string;
+}
+
+export interface ChangeCountPayload {
+  id: string;
+  size: number;
+  type: string;
+  changeType: string;
+}
+
+const initialState: CartState = {
   // items: {
   //   7: {
   //     name: "Маргарита",
@@ -22,9 +67,8 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItem: (state, action) => {
-      const newVariant = action.payload.variant;
-      const newVariantId = action.payload.id;
+    addItem: (state: CartState, action: PayloadAction<AddItemPayload>) => {
+      const { variant: newVariant, id: newVariantId } = action.payload;
       const isProductIdExist = state?.items[newVariantId];
       if (isProductIdExist) {
         const isVariantExist = state.items[newVariantId].variants.findIndex(
@@ -32,8 +76,8 @@ export const cartSlice = createSlice({
             variant.size === newVariant.size && variant.type === newVariant.type
         );
         if (isVariantExist === -1) {
-          newVariant.count = 1;
-          state.items[newVariantId].variants.push(newVariant);
+          const variantWithCount = { ...newVariant, count: 1 };
+          state.items[newVariantId].variants.push(variantWithCount);
         } else {
           state.items[newVariantId].variants[isVariantExist].count += 1;
         }
@@ -47,12 +91,15 @@ export const cartSlice = createSlice({
       state.totalPrice += newVariant.price;
       state.itemsCountInCart += 1;
     },
-    clearCart: (state) => {
+    clearCart: (state: CartState) => {
       state.items = {};
       state.totalPrice = 0;
       state.itemsCountInCart = 0;
     },
-    changeCountOfItemInCart: (state, action) => {
+    changeCountOfItemInCart: (
+      state: CartState,
+      action: PayloadAction<ChangeCountPayload>
+    ) => {
       const { id, size, type, changeType } = action.payload;
       const index = state.items[id].variants.findIndex((variant) => {
         return variant["size"] === size && variant["type"] === type;
@@ -77,7 +124,10 @@ export const cartSlice = createSlice({
           break;
       }
     },
-    deleteItemInCart: (state, action) => {
+    deleteItemInCart: (
+      state: CartState,
+      action: PayloadAction<DeleteItemPayload>
+    ) => {
       const { id, size, type } = action.payload;
       const index = state.items[id].variants.findIndex((variant) => {
         return variant["size"] === size && variant["type"] === type;
@@ -93,9 +143,10 @@ export const cartSlice = createSlice({
   },
 });
 
-export const cartItems = (state) => state.cart.items;
-export const totalPrice = (state) => state.cart.totalPrice;
-export const numberOfItemsInCart = (state) => state.cart.itemsCountInCart;
+export const cartItems = (state: RootState) => state.cart.items;
+export const totalPrice = (state: RootState) => state.cart.totalPrice;
+export const numberOfItemsInCart = (state: RootState) =>
+  state.cart.itemsCountInCart;
 
 export const { addItem, clearCart, changeCountOfItemInCart, deleteItemInCart } =
   cartSlice.actions;

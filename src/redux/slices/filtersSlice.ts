@@ -5,7 +5,7 @@ import { RootState } from "../store";
 const haveParams: boolean = Boolean(window.location.search);
 
 export type FiltersSliceTypes = {
-  categoryIndex: string | number | undefined;
+  categoryIndex: number;
   sortIndex: number;
   searchQuery: string;
 };
@@ -22,16 +22,18 @@ export const filtersSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    setSearchValue: (state: RootState, action: PayloadAction<string>) => {
-      // state: RootState action: PayloadAction<string>
+    setSearchValue: (
+      state: FiltersSliceTypes,
+      action: PayloadAction<string>
+    ) => {
       state.searchQuery = action.payload;
     },
-    setSortIndex: (state: RootState, action: PayloadAction<number>) => {
+    setSortIndex: (state: FiltersSliceTypes, action: PayloadAction<number>) => {
       state.sortIndex = action.payload;
     },
     setCategoryIndex: (
-      state: RootState,
-      action: PayloadAction<string | number | undefined>
+      state: FiltersSliceTypes,
+      action: PayloadAction<number>
     ) => {
       state.categoryIndex = action.payload;
     },
@@ -40,9 +42,8 @@ export const filtersSlice = createSlice({
 
 export const selectSortIndex = (state: RootState): number =>
   state.filters.sortIndex;
-export const selectCategoryIndex = (
-  state: RootState
-): string | number | undefined => state.filters.categoryIndex;
+export const selectCategoryIndex = (state: RootState): number =>
+  state.filters.categoryIndex;
 
 export const { setSearchValue, setSortIndex, setCategoryIndex } =
   filtersSlice.actions;
