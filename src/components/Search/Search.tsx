@@ -1,19 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import styles from "./Search.module.scss";
 import closeSvg from "../../assets/img/close-svg-icon.svg";
 import searchSvg from "../../assets/img/search-icon.svg";
-import { batch, useDispatch, useSelector } from "react-redux";
+import { batch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/filtersSlice";
 import debounce from "lodash.debounce";
 import { setItemOffset } from "../../redux/slices/paginationSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 
 export const Search = () => {
-  const stateSearchValue = useSelector((state) => state.filters.searchQuery);
+  const stateSearchValue = useAppSelector((state) => state.filters.searchQuery);
   const [localSearchValue, setLocalSearchValue] = useState(stateSearchValue);
   useEffect(() => {
     setLocalSearchValue(stateSearchValue);
   }, [stateSearchValue]);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onclickHandler = () => {
     const emptyStr = "";
@@ -24,8 +25,9 @@ export const Search = () => {
     });
   };
 
+  // eslint-disable-next-line
   const debounceFunc = useCallback(
-    debounce((value) => {
+    debounce((value: string) => {
       batch(() => {
         dispatch(setSearchValue(value.trim()));
         dispatch(setItemOffset(0));
@@ -34,9 +36,9 @@ export const Search = () => {
     []
   );
 
-  const inputHandler = (e) => {
-    setLocalSearchValue(e.target.value);
-    debounceFunc(e.target.value);
+  const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setLocalSearchValue(event.target.value);
+    debounceFunc(event.target.value);
   };
 
   return (
