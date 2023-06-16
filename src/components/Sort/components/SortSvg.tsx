@@ -1,6 +1,10 @@
 import React from "react";
 
-function SortSvg(props) {
+type SortSvgPropsTypes = {
+  open: boolean;
+};
+
+function SortSvg(props: SortSvgPropsTypes): JSX.Element {
   return (
     <svg
       className={props.open ? "open" : "close"}
